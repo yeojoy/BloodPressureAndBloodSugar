@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ForYou</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_blood_pressure">혈압</string>
+    <string name="title_blood_sugar">혈당</string>
+
+    <string name="label_blood_pressure_max">수축기</string>
+    <string name="label_blood_pressure_min">이완기</string>
+    <string name="label_pulse">맥박</string>
+
+    <string name="label_blood_sugar">혈당</string>
+
+    <string name="label_radio">식후</string>
+    <string name="label_radio_immediate">직 후</string>
+    <string name="label_radio_1_hour">1시간 후</string>
+    <string name="label_radio_2_hours">2시간 후</string>
+
+    <button name="btn_name_ok">확인</button>
+    <button name="btn_name_input">입력</button>
+    <button name="btn_name_modify">수정</button>
+    <button name="btn_name_delete">삭제</button>
+
+</resources>
