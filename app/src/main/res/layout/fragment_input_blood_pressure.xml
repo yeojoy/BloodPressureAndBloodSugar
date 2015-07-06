@@ -1,0 +1,71 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InputBloodPressureFragment">
+    <!-- 혈압 title -->
+    <TextView
+        style="@style/InputTitle"
+        android:layout_marginTop="30dp"
+        android:text="@string/title_blood_pressure" />
+
+    <!-- Blood pressure Maximum -->
+    <LinearLayout
+        style="@style/InputRow"
+        android:layout_marginTop="20dp">
+        <TextView
+            style="@style/InputLabel"
+            android:text="@string/label_blood_pressure_max" />
+
+        <EditText
+            style="@style/InputEditText"
+            android:id="@+id/et_blood_pressure_max"
+            android:hint="@string/hint_blood_pressure_max" />
+
+        <TextView
+            style="@style/InputUnit"
+            android:text="@string/unit_blood_pressue" />
+    </LinearLayout>
+
+    <!-- Blood pressure Minimum -->
+    <LinearLayout
+        style="@style/InputRow"
+        android:layout_marginTop="5dp">
+        <TextView
+            style="@style/InputLabel"
+            android:text="@string/label_blood_pressure_min" />
+
+        <EditText
+            style="@style/InputEditText"
+            android:id="@+id/et_blood_pressure_min"
+            android:hint="@string/hint_blood_pressure_min" />
+
+        <TextView
+            style="@style/InputUnit"
+            android:text="@string/unit_blood_pressue" />
+    </LinearLayout>
+
+    <!-- Blood pulse -->
+    <LinearLayout
+        style="@style/InputRow"
+        android:layout_marginTop="5dp">
+        <TextView
+            style="@style/InputLabel"
+            android:text="@string/label_blood_pulse" />
+
+        <EditText
+            style="@style/InputEditText"
+            android:id="@+id/et_blood_pulse"
+            android:hint="@string/hint_blood_pulse" />
+
+        <TextView
+            style="@style/InputUnit"
+            android:text="@string/unit_blood_pulse" />
+    </LinearLayout>
+
+    <Button
+        style="@style/InputSaveButton"
+        android:id="@+id/btn_save_blood_pressure"/>
+</LinearLayout>

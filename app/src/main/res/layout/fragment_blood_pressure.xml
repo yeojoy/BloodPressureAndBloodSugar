@@ -1,12 +1,22 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BloodPressureFragment">
-    <TextView
+    <ListView
+        android:id="@+id/lv_blood_pressure"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="match_parent" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_empty_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/empty_data"
+        android:textColor="@color/primary_text"
+        android:textSize="24dp"
+        android:gravity="center"
+        android:background="@android:color/background_light"
+        android:visibility="gone"/>
+</RelativeLayout>

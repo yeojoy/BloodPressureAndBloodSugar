@@ -1,4 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.parse'
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'https://maven.parse.com/repo' }
+    }
+    dependencies {
+        classpath 'com.parse.tools:gradle:1.+'
+    }
+}
 
 android {
     compileSdkVersion 22
@@ -22,4 +33,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
 }

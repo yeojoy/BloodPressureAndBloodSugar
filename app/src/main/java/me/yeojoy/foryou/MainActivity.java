@@ -1,16 +1,27 @@
 package me.yeojoy.foryou;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.input.InputActivity;
+
+public class MainActivity extends AppCompatActivity implements Consts {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this;
     }
 
 
@@ -29,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_input) {
+            Intent intent = new Intent(mContext, InputActivity.class);
+            intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_PRESSURE);
+            startActivity(intent);
             return true;
         }
 

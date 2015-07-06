@@ -1,0 +1,63 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".BloodPressureFragment">
+    <!-- 혈당 title -->
+    <TextView
+        style="@style/InputTitle"
+        android:layout_marginTop="30dp"
+        android:text="@string/title_blood_sugar" />
+
+    <!-- Blood pressure Maximum -->
+    <LinearLayout
+        style="@style/InputRow"
+        android:layout_marginTop="20dp">
+        <TextView
+            style="@style/InputLabel"
+            android:text="@string/label_blood_sugar" />
+
+        <EditText
+            style="@style/InputEditText"
+            android:id="@+id/et_blood_pressure_max"
+            android:hint="@string/hint_blood_pressure_max" />
+
+        <TextView
+            style="@style/InputUnit"
+            android:text="@string/unit_blood_sugar" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/InputLabel"
+        android:text="@string/label_radio"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"/>
+
+    <RadioGroup
+        android:id="@+id/rg_time_after_eating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="40dp">
+        <RadioButton
+            style="@style/InputRadioButton"
+            android:id="@+id/rb_immediatly"
+            android:text="@string/label_radio_immediate" />
+
+        <RadioButton
+            style="@style/InputRadioButton"
+            android:id="@+id/rb_after_one_hour"
+            android:text="@string/label_radio_1_hour" />
+
+        <RadioButton
+            style="@style/InputRadioButton"
+            android:id="@+id/rb_after_two_hours"
+            android:text="@string/label_radio_2_hours" />
+    </RadioGroup>
+
+    <Button
+        style="@style/InputSaveButton"
+        android:id="@+id/btn_save_blood_sugar"/>
+</LinearLayout>

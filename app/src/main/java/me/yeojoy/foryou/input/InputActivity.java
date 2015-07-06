@@ -1,23 +1,20 @@
-package me.yeojoy.foryou;
+package me.yeojoy.foryou.input;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import me.yeojoy.foryou.R;
+import me.yeojoy.foryou.config.Consts;
 
 /**
  * Created by yeojoy on 15. 7. 3..
  */
-public class InputActivity extends AppCompatActivity {
+public class InputActivity extends AppCompatActivity implements Consts {
 
     private static final String TAG = InputActivity.class.getSimpleName();
-
-    public static final String KEY_INPUT_TYPE = "input_type";
-
-    public static final int INPUT_TYPE_BLOOD_PRESSURE   = 0x000001;
-    public static final int INPUT_TYPE_BLOOD_SUGAR      = 0x000002;
 
     private int mCurrentInputType = 0;
 
@@ -27,6 +24,7 @@ public class InputActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_input);
 
         mContext = this;
         mFragmentManager = getFragmentManager();
@@ -42,13 +40,16 @@ public class InputActivity extends AppCompatActivity {
 
             FragmentTransaction transaction = mFragmentManager.beginTransaction();
             switch (mCurrentInputType) {
-                case INPUT_TYPE_BLOOD_PRESSURE:
-                    // transaction.add(framgnet).commit();
-                    break;
+                case INPUT_TYPE_BLOOD_PRESSURE: {
+                    InputBloodPressureFragment fragment = new InputBloodPressureFragment();
 
-                case INPUT_TYPE_BLOOD_SUGAR:
+                    transaction.add(R.id.container, fragment).commit();
+                    break;
+                }
+                case INPUT_TYPE_BLOOD_SUGAR: {
                     // transaction.add(framgnet).commit();
                     break;
+                }
             }
         }
 

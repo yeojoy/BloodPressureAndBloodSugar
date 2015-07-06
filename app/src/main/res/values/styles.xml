@@ -8,4 +8,58 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="InputTitle">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+
+    <style name="InputRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="InputLabel">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textSize">17dp</item>
+    </style>
+
+    <style name="InputEditText">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="InputUnit">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="InputSaveButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:text">@string/btn_name_save</item>
+    </style>
+
+    <style name="InputRadioButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
 </resources>
