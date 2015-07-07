@@ -48,10 +48,12 @@
     </style>
 
     <style name="InputSaveButton">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_gravity">right|center_vertical</item>
         <item name="android:text">@string/btn_name_save</item>
     </style>
@@ -62,4 +64,19 @@
         <item name="android:paddingLeft">10dp</item>
     </style>
 
+    <!-- Row -->
+    <style name="RowTextView">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="RowBloodPressureDate" parent="RowTextView">
+        <item name="android:layout_width">@dimen/bp_width_date</item>
+    </style>
+
+    <style name="RowBloodPressureData" parent="RowTextView">
+        <item name="android:layout_width">@dimen/bp_width_the_others</item>
+    </style>
 </resources>

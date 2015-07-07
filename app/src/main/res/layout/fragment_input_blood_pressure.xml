@@ -8,7 +8,7 @@
     <!-- 혈압 title -->
     <TextView
         style="@style/InputTitle"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:text="@string/title_blood_pressure" />
 
     <!-- Blood pressure Maximum -->
@@ -64,6 +64,9 @@
             style="@style/InputUnit"
             android:text="@string/unit_blood_pulse" />
     </LinearLayout>
+
+    <include
+        layout="@layout/date_time_linearlayout" />
 
     <Button
         style="@style/InputSaveButton"

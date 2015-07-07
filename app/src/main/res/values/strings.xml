@@ -6,8 +6,10 @@
     <string name="title_blood_pressure">혈압</string>
     <string name="title_blood_sugar">혈당</string>
 
-    <string name="label_blood_pressure_max">수축기</string>
-    <string name="label_blood_pressure_min">이완기</string>
+    <string name="label_blood_date">날짜</string>
+    <string name="label_blood_time">시간</string>
+    <string name="label_blood_pressure_max">최대</string>
+    <string name="label_blood_pressure_min">최소</string>
     <string name="label_blood_pulse">맥박</string>
 
     <string name="label_blood_sugar">혈당</string>
@@ -26,6 +28,8 @@
     <string name="hint_blood_pressure_max">120</string>
     <string name="hint_blood_pressure_min">80</string>
     <string name="hint_blood_pulse">75</string>
+
+    <string name="hint_blood_sugar">120</string>
 
     <string name="unit_blood_pressue">mmHg</string>
     <string name="unit_blood_pulse">회</string>

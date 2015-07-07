@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,26 +24,23 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.R;
-import me.yeojoy.foryou.model.BloodPressure;
+import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.utils.CommonUtils;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class InputBloodPressureFragment extends Fragment implements Consts {
+public class InputBloodSugarFragment extends Fragment implements Consts {
 
-    private static final String TAG = InputBloodPressureFragment.class.getSimpleName();
+    private static final String TAG = InputBloodSugarFragment.class.getSimpleName();
 
     private Context mContext;
 
-    private EditText mEtBloodPressureMax, mEtBloodPressureMin, mEtBloodPulse;
+    private EditText mEtBloodSugar;
     private Button mBtnSave, mBtnDate, mBtnTime;
 
-    private float mBloodPressureMax = 0f;
-    private float mBloodPressureMin = 0f;
-    private int mBloodPulse = 0;
+    private float mBloodSugar = 0f;
 
     private String mDateTime;
 
@@ -57,15 +53,13 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_input_blood_pressure, container, false);
+        return inflater.inflate(R.layout.fragment_input_blood_sugar, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEtBloodPressureMax = (EditText) view.findViewById(R.id.et_blood_pressure_max);
-        mEtBloodPressureMin = (EditText) view.findViewById(R.id.et_blood_pressure_min);
-        mEtBloodPulse = (EditText) view.findViewById(R.id.et_blood_pulse);
+        mEtBloodSugar = (EditText) view.findViewById(R.id.et_blood_pressure_max);
 
         mBtnSave = (Button) view.findViewById(R.id.btn_save_blood_pressure);
         mBtnSave.setOnClickListener(mButtonClickListener);
@@ -85,13 +79,11 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         @Override
         protected Boolean doInBackground(Float... params) {
-            BloodPressure pressure = ParseObject.create(BloodPressure.class);
-            pressure.setBloodPressureMax(mBloodPressureMax);
-            pressure.setBloodPressureMin(mBloodPressureMin);
-            pressure.setBloodPulse(mBloodPulse);
-
+            ParseObject pressure = new ParseObject(PARSE_BLOOD_SUGAR_TABLE);
+            pressure.put(PARSE_BS_COLUMN_SUGAR, mBloodSugar);
             try {
-                pressure.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
+                pressure.put(PARSE_COMMON_COLUMN_REGISTERED_AT,
+                        new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
             } catch (java.text.ParseException e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -113,15 +105,11 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
             if (isSuccessful) {
                 // 초기화
-                mEtBloodPressureMax.setText("");
-                mEtBloodPressureMin.setText("");
-                mEtBloodPulse.setText("");
+                mEtBloodSugar.setText("");
 
-                mBloodPressureMax = 0f;
-                mBloodPressureMin = 0f;
-                mBloodPulse = 0;
+                mBloodSugar = 0f;
 
-                CommonUtils.hideKeyboard(mContext, mEtBloodPulse);
+                CommonUtils.hideKeyboard(mContext, mEtBloodSugar);
 
                 ((InputActivity) mContext).finish();
             } else {
@@ -138,9 +126,9 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         public void onClick(View v) {
 
             switch (v.getId()) {
-                case R.id.btn_save_blood_pressure:
+                case R.id.btn_save_blood_sugar:
                     if (verifyEditText()) {
-                        saveBloodPressure();
+                        saveBloodSugar();
                     } else {
                         Toast.makeText(mContext, R.string.toast_warning_data_not_valid,
                                 Toast.LENGTH_SHORT).show();
@@ -205,7 +193,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         }
     };
 
-    private void saveBloodPressure() {
+    private void saveBloodSugar() {
         SavingAsyncTask task = new SavingAsyncTask();
         task.execute();
     }
@@ -214,28 +202,10 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         boolean isValid = true;
 
         try {
-            mBloodPressureMax
-                    = Float.parseFloat(mEtBloodPressureMax.getText().toString());
+            mBloodSugar
+                    = Float.parseFloat(mEtBloodSugar.getText().toString());
         } catch (NumberFormatException e) {
-            Log.e(TAG, mEtBloodPressureMax.getText().toString() +
-                    " is not number type.");
-            isValid = false;
-        }
-
-        try {
-            mBloodPressureMin
-                    = Float.parseFloat(mEtBloodPressureMin.getText().toString());
-        } catch (NumberFormatException e) {
-            Log.e(TAG, mEtBloodPressureMin.getText().toString() +
-                    " is not number type.");
-            isValid = false;
-        }
-
-        try {
-            mBloodPulse
-                    = Integer.parseInt(mEtBloodPulse.getText().toString());
-        } catch (NumberFormatException e) {
-            Log.e(TAG, mEtBloodPulse.getText().toString() +
+            Log.e(TAG, mEtBloodSugar.getText().toString() +
                     " is not number type.");
             isValid = false;
         }

@@ -4,8 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BloodPressureFragment">
-    <ListView
-        android:id="@+id/lv_blood_pressure"
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_blood_pressure"
+        android:layout_below="@id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -3,8 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="list_title_height">48dp</dimen>
-
-    <dimen name="bp_width_date">120dp</dimen>
-    <dimen name="bp_width_the_others">65dp</dimen>
+    <dimen name="bp_width_date">100dp</dimen>
+    <dimen name="bp_width_the_others">60dp</dimen>
 </resources>

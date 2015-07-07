@@ -47,7 +47,9 @@ public class InputActivity extends AppCompatActivity implements Consts {
                     break;
                 }
                 case INPUT_TYPE_BLOOD_SUGAR: {
-                    // transaction.add(framgnet).commit();
+                    InputBloodSugarFragment fragment = new InputBloodSugarFragment();
+
+                    transaction.add(R.id.container, fragment).commit();
                     break;
                 }
             }

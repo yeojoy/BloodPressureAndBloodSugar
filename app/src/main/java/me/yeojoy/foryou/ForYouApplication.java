@@ -5,9 +5,11 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.model.BloodPressure;
 
 /**
  * Created by yeojoy on 15. 7. 3..
@@ -23,7 +25,9 @@ public class ForYouApplication extends Application implements Consts {
         // Initialize Crash Reporting.
         ParseCrashReporting.enable(this);
         // Enable Local Datastore.
-//        Parse.enableLocalDatastore(this);
+        Parse.enableLocalDatastore(this);
+
+        ParseObject.registerSubclass(BloodPressure.class);
 
         // Add your initialization code here
         Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);

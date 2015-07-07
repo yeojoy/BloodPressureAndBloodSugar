@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/RowBloodPressureDate"
+        android:id="@+id/tv_date"
+        android:text="2015-07-07"/>
+
+    <TextView
+        style="@style/RowBloodPressureData"
+        android:id="@+id/tv_time"
+        android:text="14:08"/>
+
+    <TextView
+        style="@style/RowBloodPressureData"
+        android:id="@+id/tv_blood_pressure_max"
+        android:layout_height="wrap_content"
+        android:text="160"/>
+
+    <TextView
+        style="@style/RowBloodPressureData"
+        android:id="@+id/tv_blood_pressure_min"
+        android:text="80"/>
+
+    <TextView
+        style="@style/RowBloodPressureData"
+        android:id="@+id/tv_blood_pulse"
+        android:text="60"/>
+
+
+
+</LinearLayout>
