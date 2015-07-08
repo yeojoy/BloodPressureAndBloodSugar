@@ -30,7 +30,7 @@ public class InputActivity extends AppCompatActivity implements Consts {
         mContext = this;
         mFragmentManager = getFragmentManager();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getIntent() != null) {
@@ -48,12 +48,14 @@ public class InputActivity extends AppCompatActivity implements Consts {
                     InputBloodPressureFragment fragment = new InputBloodPressureFragment();
 
                     transaction.add(R.id.container, fragment).commit();
+                    getSupportActionBar().setTitle(R.string.title_input_blood_pressure);
                     break;
                 }
                 case INPUT_TYPE_BLOOD_SUGAR: {
                     InputBloodSugarFragment fragment = new InputBloodSugarFragment();
 
                     transaction.add(R.id.container, fragment).commit();
+                    getSupportActionBar().setTitle(R.string.title_input_blood_sugar);
                     break;
                 }
             }

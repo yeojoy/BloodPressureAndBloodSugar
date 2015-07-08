@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">ForYou</string>
+    <string name="app_name">혈압·혈당 관리</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_input_blood_pressure">혈압 입력</string>
     <string name="action_input_blood_sugar">혈당 입력</string>
 
     <string name="title_blood_pressure">혈압</string>
     <string name="title_blood_sugar">혈당</string>
+    <string name="title_input_blood_pressure">혈압입력</string>
+    <string name="title_input_blood_sugar">혈당입력</string>
 
     <string name="label_blood_date">날짜</string>
     <string name="label_blood_time">시간</string>
