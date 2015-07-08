@@ -63,6 +63,9 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
         mEtBloodPressureMax = (EditText) view.findViewById(R.id.et_blood_pressure_max);
         mEtBloodPressureMin = (EditText) view.findViewById(R.id.et_blood_pressure_min);
         mEtBloodPulse = (EditText) view.findViewById(R.id.et_blood_pulse);

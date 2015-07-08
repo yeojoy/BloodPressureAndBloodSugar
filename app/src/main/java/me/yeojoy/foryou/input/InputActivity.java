@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
@@ -28,6 +29,9 @@ public class InputActivity extends AppCompatActivity implements Consts {
 
         mContext = this;
         mFragmentManager = getFragmentManager();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (getIntent() != null) {
 

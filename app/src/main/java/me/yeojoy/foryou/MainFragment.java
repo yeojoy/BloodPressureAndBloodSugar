@@ -7,11 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.yeojoy.foryou.adapter.BloodSugarAdapter;
 import me.yeojoy.foryou.view.SlidingTabLayout;
 
 /**
@@ -25,6 +25,8 @@ public class MainFragment extends Fragment {
 
     private ViewPager mVpTabs;
     private SlidingTabLayout mStlTabTitle;
+
+    private Toolbar mToolbar;
 
     @Override
     public void onAttach(Activity activity) {
@@ -41,6 +43,10 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((MainActivity) getActivity()).setSupportActionBar(mToolbar);
+
         mVpTabs = (ViewPager) view.findViewById(R.id.vp_pager);
         DemoCollectionPagerAdapter adapter
                 = new DemoCollectionPagerAdapter(
