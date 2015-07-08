@@ -1,8 +1,10 @@
 package me.yeojoy.foryou.input;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -24,23 +27,30 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import me.yeojoy.foryou.MainActivity;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.config.ParseConsts;
+import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class InputBloodSugarFragment extends Fragment implements Consts {
+public class InputBloodSugarFragment extends Fragment implements Consts, ParseConsts {
 
     private static final String TAG = InputBloodSugarFragment.class.getSimpleName();
 
     private Context mContext;
 
-    private EditText mEtBloodSugar;
+    private EditText mEtBloodSugar, mEtWeight;
     private Button mBtnSave, mBtnDate, mBtnTime;
 
-    private float mBloodSugar = 0f;
+    private RadioGroup mRgMeasureTime;
+
+    private int mBloodSugar = 0;
+    private float mWeight = 0f;
+    private int mMeasureTime = 1;
 
     private String mDateTime;
 
@@ -59,10 +69,21 @@ public class InputBloodSugarFragment extends Fragment implements Consts {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEtBloodSugar = (EditText) view.findViewById(R.id.et_blood_pressure_max);
 
-        mBtnSave = (Button) view.findViewById(R.id.btn_save_blood_pressure);
+        mEtBloodSugar = (EditText) view.findViewById(R.id.et_blood_sugar);
+        mEtWeight = (EditText) view.findViewById(R.id.et_weight);
+
+        mBtnSave = (Button) view.findViewById(R.id.btn_save_blood_sugar);
         mBtnSave.setOnClickListener(mButtonClickListener);
+
+        mRgMeasureTime = (RadioGroup) view.findViewById(R.id.rg_measure_time);
+        mRgMeasureTime.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.d(TAG, "RadioButton checked ID : " + checkedId);
+                mMeasureTime = checkedId;
+            }
+        });
 
         Date date = new Date();
 
@@ -75,22 +96,34 @@ public class InputBloodSugarFragment extends Fragment implements Consts {
         mBtnTime.setOnClickListener(mButtonClickListener);
     }
 
+
     private class SavingAsyncTask extends AsyncTask<Float, Void, Boolean> {
+        private ProgressDialog mProgressDialog = new ProgressDialog(mContext);
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mBtnSave.setEnabled(false);
+            mProgressDialog.setMessage(getString(R.string.progress_saving));
+            mProgressDialog.show();
+        }
 
         @Override
         protected Boolean doInBackground(Float... params) {
-            ParseObject pressure = new ParseObject(PARSE_BLOOD_SUGAR_TABLE);
-            pressure.put(PARSE_BS_COLUMN_SUGAR, mBloodSugar);
+            BloodSugar sugar = ParseObject.create(BloodSugar.class);
+            sugar.setBloodSugar(mBloodSugar);
+            sugar.setMeasureTime(mMeasureTime);
+            sugar.setWeight(mWeight);
+
             try {
-                pressure.put(PARSE_COMMON_COLUMN_REGISTERED_AT,
-                        new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
+                sugar.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
             } catch (java.text.ParseException e) {
                 Log.e(TAG, e.getMessage());
             }
 
             Boolean isSuccessful = true;
             try {
-                pressure.save();
+                sugar.save();
             } catch (ParseException e) {
                 Log.e(TAG, e.getMessage());
                 isSuccessful = false;
@@ -103,11 +136,16 @@ public class InputBloodSugarFragment extends Fragment implements Consts {
         protected void onPostExecute(Boolean isSuccessful) {
             super.onPostExecute(isSuccessful);
 
+            if (mProgressDialog.isShowing())
+                mProgressDialog.dismiss();
+
             if (isSuccessful) {
                 // 초기화
                 mEtBloodSugar.setText("");
+                mEtWeight.setText("");
 
-                mBloodSugar = 0f;
+                mBloodSugar = 0;
+                mWeight = 0f;
 
                 CommonUtils.hideKeyboard(mContext, mEtBloodSugar);
 
@@ -117,6 +155,8 @@ public class InputBloodSugarFragment extends Fragment implements Consts {
                         R.string.toast_warning_fail_save_blood_pressure,
                         Toast.LENGTH_SHORT).show();
             }
+
+            mBtnSave.setEnabled(true);
         }
     }
 
@@ -203,11 +243,21 @@ public class InputBloodSugarFragment extends Fragment implements Consts {
 
         try {
             mBloodSugar
-                    = Float.parseFloat(mEtBloodSugar.getText().toString());
+                    = Integer.parseInt(mEtBloodSugar.getText().toString());
         } catch (NumberFormatException e) {
             Log.e(TAG, mEtBloodSugar.getText().toString() +
-                    " is not number type.");
+                    " is not the number type.");
             isValid = false;
+        }
+
+        String weight = mEtWeight.getText().toString();
+        if (weight != null && !weight.isEmpty()) {
+            mWeight = Float.parseFloat(weight);
+            if (mWeight > 120f || mWeight < 20f) {
+                Toast.makeText(mContext, R.string.toast_warning_not_valid_weight,
+                        Toast.LENGTH_SHORT).show();
+                isValid = false;
+            }
         }
 
         String date = mBtnDate.getText().toString();

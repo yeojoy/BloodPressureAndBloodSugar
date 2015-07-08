@@ -20,18 +20,18 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-import me.yeojoy.foryou.adapter.BloodPressureAdapter;
+import me.yeojoy.foryou.adapter.BloodSugarAdapter;
 import me.yeojoy.foryou.config.ParseConsts;
-import me.yeojoy.foryou.model.BloodPressure;
+import me.yeojoy.foryou.model.BloodSugar;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class BloodPressureFragment extends Fragment implements ParseConsts {
+public class BloodSugarFragment extends Fragment implements ParseConsts {
 
-    private static final String TAG = BloodPressureFragment.class.getSimpleName();
+    private static final String TAG = BloodSugarFragment.class.getSimpleName();
 
-    public static final String VIEW_TAG = "혈압";
+    public static final String VIEW_TAG = "혈당";
 
     private Context mContext;
 
@@ -39,9 +39,9 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
 
     private TextView mTvEmptyData;
 
-    private List<BloodPressure> mBloodPressureDataList;
+    private List<BloodSugar> mBloodSugarDataList;
 
-    private BloodPressureAdapter mAdapter;
+    private BloodSugarAdapter mAdapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -64,7 +64,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
         mRvBloodPressure = (RecyclerView) view.findViewById(R.id.rv_blood_pressure);
         mTvEmptyData = (TextView) view.findViewById(R.id.tv_empty_data);
 
-        mAdapter = new BloodPressureAdapter(mContext, null);
+        mAdapter = new BloodSugarAdapter(mContext, null);
         mRvBloodPressure.setAdapter(mAdapter);
         mRvBloodPressure.setLayoutManager(new LinearLayoutManager(mContext));
 
@@ -79,22 +79,22 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
     }
 
     public void setHeader(LinearLayout header) {
-        LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.row_blood_pressure, null);
+        LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.row_blood_sugar, null);
         ((TextView) layout.findViewById(R.id.tv_date)).setText(R.string.label_blood_date);
         ((TextView) layout.findViewById(R.id.tv_time)).setText(R.string.label_blood_time);
-        ((TextView) layout.findViewById(R.id.tv_blood_pressure_max)).setText(R.string.label_blood_pressure_max);
-        ((TextView) layout.findViewById(R.id.tv_blood_pressure_min)).setText(R.string.label_blood_pressure_min);
-        ((TextView) layout.findViewById(R.id.tv_blood_pulse)).setText(R.string.label_blood_pulse);
+        ((TextView) layout.findViewById(R.id.tv_blood_sugar)).setText(R.string.label_blood_sugar);
+        ((TextView) layout.findViewById(R.id.tv_measure_time)).setText(R.string.label_measure_time);
+        ((TextView) layout.findViewById(R.id.tv_weight)).setText(R.string.label_weight);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         header.addView(layout, params);
     }
 
-    private class SelectAsyncTask extends AsyncTask<Void, Void, List<BloodPressure>> {
+    private class SelectAsyncTask extends AsyncTask<Void, Void, List<BloodSugar>> {
 
         @Override
-        protected List<BloodPressure> doInBackground(Void... params) {
-            ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
+        protected List<BloodSugar> doInBackground(Void... params) {
+            ParseQuery<BloodSugar> query = ParseQuery.getQuery(BloodSugar.class);
             query.orderByDescending(PARSE_COMMON_COLUMN_REGISTERED_AT);
 
             try {
@@ -107,7 +107,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
         }
 
         @Override
-        protected void onPostExecute(List<BloodPressure> data) {
+        protected void onPostExecute(List<BloodSugar> data) {
             super.onPostExecute(data);
 
             if (data == null || data.size() < 1) {
@@ -117,8 +117,8 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
                 return;
             }
 
-            mBloodPressureDataList = data;
-            mAdapter.setBloodPressureList(data);
+            mBloodSugarDataList = data;
+            mAdapter.setBloodSugarList(data);
 
             mTvEmptyData.setVisibility(View.GONE);
 //            mRvBloodPressure.setAdapter(adapter);

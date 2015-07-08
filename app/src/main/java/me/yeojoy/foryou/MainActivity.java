@@ -2,8 +2,8 @@ package me.yeojoy.foryou;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -40,11 +40,15 @@ public class MainActivity extends AppCompatActivity implements Consts {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_input) {
+        if (id == R.id.action_input_blood_pressure) {
             Intent intent = new Intent(mContext, InputActivity.class);
             intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_PRESSURE);
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_input_blood_sugar) {
+            Intent intent = new Intent(mContext, InputActivity.class);
+            intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_SUGAR);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

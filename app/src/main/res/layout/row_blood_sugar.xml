@@ -19,18 +19,20 @@
 
     <TextView
         style="@style/RowData"
-        android:id="@+id/tv_blood_pressure_max"
+        android:id="@+id/tv_blood_sugar"
         android:layout_height="wrap_content"
-        android:text="160"/>
+        android:text="120"/>
+
+    <TextView
+        style="@style/RowMeasureTime"
+        android:id="@+id/tv_measure_time"
+        android:text="1시간 후"/>
 
     <TextView
         style="@style/RowData"
-        android:id="@+id/tv_blood_pressure_min"
-        android:text="80"/>
-
-    <TextView
-        style="@style/RowData"
-        android:id="@+id/tv_blood_pulse"
+        android:id="@+id/tv_weight"
         android:text="60"/>
+
+
 
 </LinearLayout>

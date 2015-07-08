@@ -8,13 +8,14 @@ import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodPressure;
+import me.yeojoy.foryou.model.BloodSugar;
 
 /**
  * Created by yeojoy on 15. 7. 3..
  */
-public class ForYouApplication extends Application implements Consts {
+public class ForYouApplication extends Application implements ParseConsts {
 
     private static final String TAG = ForYouApplication.class.getSimpleName();
 
@@ -27,7 +28,10 @@ public class ForYouApplication extends Application implements Consts {
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 
+        // when you create subclass of PasreObject,
+        // You should register subclass, if you want to use!
         ParseObject.registerSubclass(BloodPressure.class);
+        ParseObject.registerSubclass(BloodSugar.class);
 
         // Add your initialization code here
         Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);

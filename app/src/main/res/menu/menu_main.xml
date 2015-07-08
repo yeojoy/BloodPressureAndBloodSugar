@@ -2,9 +2,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
-    <item android:id="@+id/action_input"
-          android:title="@string/action_input"
+    <item android:id="@+id/action_input_blood_pressure"
+          android:title="@string/action_input_blood_pressure"
           android:orderInCategory="100"
           android:icon="@android:drawable/ic_input_add"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_input_blood_sugar"
+          android:title="@string/action_input_blood_sugar"
+          android:orderInCategory="100"
+          android:icon="@android:drawable/ic_input_add"
+          app:showAsAction="never"/>
 </menu>

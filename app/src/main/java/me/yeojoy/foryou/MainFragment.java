@@ -2,8 +2,8 @@ package me.yeojoy.foryou;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.yeojoy.foryou.adapter.BloodSugarAdapter;
 import me.yeojoy.foryou.view.SlidingTabLayout;
 
 /**
@@ -62,18 +63,17 @@ public class MainFragment extends Fragment {
                 default:
                     fragment = new BloodPressureFragment();
                     break;
+                case 1:
+                    fragment = new BloodSugarFragment();
+                    break;
             }
-
-            // TODO
-            // arguments를 보낼 필요가 있다면.
-            // 여기서 fragment.setArguments(bundle); 해준다.
 
             return fragment;
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
 
         @Override
@@ -81,6 +81,9 @@ public class MainFragment extends Fragment {
             switch (position) {
                 default:
                     return BloodPressureFragment.VIEW_TAG;
+
+                case 1:
+                    return BloodSugarFragment.VIEW_TAG;
 
             }
         }

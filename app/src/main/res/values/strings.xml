@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">ForYou</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_input">입력하기</string>
+    <string name="action_input_blood_pressure">혈압 입력</string>
+    <string name="action_input_blood_sugar">혈당 입력</string>
 
     <string name="title_blood_pressure">혈압</string>
     <string name="title_blood_sugar">혈당</string>
@@ -13,6 +14,8 @@
     <string name="label_blood_pulse">맥박</string>
 
     <string name="label_blood_sugar">혈당</string>
+    <string name="label_measure_time">측정시각</string>
+    <string name="label_weight">몸무게</string>
 
     <string name="label_radio">식후</string>
     <string name="label_radio_immediate">직 후</string>
@@ -30,14 +33,20 @@
     <string name="hint_blood_pulse">75</string>
 
     <string name="hint_blood_sugar">120</string>
+    <string name="hint_weight">(선택)</string>
 
     <string name="unit_blood_pressue">mmHg</string>
     <string name="unit_blood_pulse">회</string>
     <string name="unit_blood_sugar">mg/dL</string>
+    <string name="unit_weight">kg</string>
 
     <string name="empty_data">가져올 데이터가 없습니다.</string>
 
     <!-- toast warning -->
     <string name="toast_warning_fail_save_blood_pressure">데이터를 저장하는데 통신이 원할 하지 않습니다.</string>
     <string name="toast_warning_data_not_valid">입력하지 않은 data가 있습니다.</string>
+    <string name="toast_warning_not_valid_weight">몸무게는 20~120kg까지 입력할 수 있습니다.</string>
+
+    <!-- progress dialog -->
+    <string name="progress_saving">저장 중입니다.</string>
 </resources>

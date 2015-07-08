@@ -3,11 +3,11 @@ package me.yeojoy.foryou.input;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.R;
+import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.utils.CommonUtils;
 
@@ -82,6 +82,15 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     }
 
     private class SavingAsyncTask extends AsyncTask<Float, Void, Boolean> {
+        private ProgressDialog mProgressDialog = new ProgressDialog(mContext);
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mBtnSave.setEnabled(false);
+            mProgressDialog.setMessage(getString(R.string.progress_saving));
+            mProgressDialog.show();
+        }
 
         @Override
         protected Boolean doInBackground(Float... params) {
@@ -111,6 +120,9 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         protected void onPostExecute(Boolean isSuccessful) {
             super.onPostExecute(isSuccessful);
 
+            if (mProgressDialog.isShowing())
+                mProgressDialog.dismiss();
+
             if (isSuccessful) {
                 // 초기화
                 mEtBloodPressureMax.setText("");
@@ -129,6 +141,8 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
                         R.string.toast_warning_fail_save_blood_pressure,
                         Toast.LENGTH_SHORT).show();
             }
+
+            mBtnSave.setEnabled(true);
         }
     }
 

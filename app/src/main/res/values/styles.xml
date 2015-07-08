@@ -67,16 +67,27 @@
     <!-- Row -->
     <style name="RowTextView">
         <item name="android:textColor">@color/primary_text</item>
-        <item name="android:textSize">17dp</item>
+        <item name="android:textSize">16dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="RowBloodPressureDate" parent="RowTextView">
-        <item name="android:layout_width">@dimen/bp_width_date</item>
+    <!-- 혈압 TextView -->
+    <style name="RowDate" parent="RowTextView">
+        <item name="android:layout_weight">2</item>
     </style>
 
-    <style name="RowBloodPressureData" parent="RowTextView">
-        <item name="android:layout_width">@dimen/bp_width_the_others</item>
+    <style name="RowTime" parent="RowTextView">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="RowData" parent="RowTextView">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- 혈당 TextView -->
+    <style name="RowMeasureTime" parent="RowTextView">
+        <item name="android:layout_weight">1.5</item>
     </style>
 </resources>

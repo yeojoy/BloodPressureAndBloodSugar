@@ -29,6 +29,24 @@
             android:text="@string/unit_blood_sugar" />
     </LinearLayout>
 
+    <!-- Weight -->
+    <LinearLayout
+        style="@style/InputRow"
+        android:layout_marginTop="10dp">
+        <TextView
+            style="@style/InputLabel"
+            android:text="@string/label_weight" />
+
+        <EditText
+            style="@style/InputEditText"
+            android:id="@+id/et_weight"
+            android:hint="@string/hint_weight" />
+
+        <TextView
+            style="@style/InputUnit"
+            android:text="@string/unit_weight" />
+    </LinearLayout>
+
     <TextView
         style="@style/InputLabel"
         android:text="@string/label_radio"
@@ -36,7 +54,7 @@
         android:layout_marginLeft="30dp"/>
 
     <RadioGroup
-        android:id="@+id/rg_time_after_eating"
+        android:id="@+id/rg_measure_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -49,6 +67,7 @@
         <RadioButton
             style="@style/InputRadioButton"
             android:id="@+id/rb_after_one_hour"
+            android:checked="true"
             android:text="@string/label_radio_1_hour" />
 
         <RadioButton
