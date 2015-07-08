@@ -8,6 +8,7 @@ import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import me.yeojoy.foryou.config.ApiKey;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.model.BloodSugar;
@@ -15,7 +16,7 @@ import me.yeojoy.foryou.model.BloodSugar;
 /**
  * Created by yeojoy on 15. 7. 3..
  */
-public class ForYouApplication extends Application implements ParseConsts {
+public class ForYouApplication extends Application implements ApiKey {
 
     private static final String TAG = ForYouApplication.class.getSimpleName();
 

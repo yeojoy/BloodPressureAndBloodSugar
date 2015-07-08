@@ -4,9 +4,6 @@ package me.yeojoy.foryou.config;
  * Created by yeojoy on 15. 7. 6..
  */
 public interface ParseConsts {
-    String PARSE_APPLICATION_ID = "GnUFqSTV7R3HKBy8CueZ6yLF2dpRPrEvmFNySFhg";
-    String PARSE_CLIENT_KEY = "WXwuObRQOJVDtWvejGu1a6H0CL1KbjfbzCD0xCW3";
-
     /** 혈압 parse data and key */
     String PARSE_BLOOD_PRESSURE_TABLE = "BloodPressure";
 
