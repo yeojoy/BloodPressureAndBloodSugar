@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -74,6 +75,9 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
     @Override
     public void onResume() {
         super.onResume();
+
+//        showBloodPressureData();
+
         SelectAsyncTask task = new SelectAsyncTask();
         task.execute();
     }
@@ -88,6 +92,43 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         header.addView(layout, params);
+    }
+
+    private void showBloodPressureData() {
+        final String BLOOD_PRESSURE_DATE = "blood_pressure";
+
+        ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
+        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
+        query.findInBackground(new FindCallback<BloodPressure>() {
+            @Override
+            public void done(List<BloodPressure> list, ParseException e) {
+                if (list == null || list.size() < 1) {
+                    Log.d(TAG, e.getMessage());
+                    return;
+                }
+
+                displayData(list);
+            }
+        });
+    }
+
+    private void displayData(final List<BloodPressure> list) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (list == null || list.size() < 1) {
+                    Log.e(TAG, "no list.");
+
+                    mTvEmptyData.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                mBloodPressureDataList = list;
+                mAdapter.setBloodPressureList(list);
+
+                mTvEmptyData.setVisibility(View.GONE);
+            }
+        });
     }
 
     private class SelectAsyncTask extends AsyncTask<Void, Void, List<BloodPressure>> {
@@ -121,7 +162,6 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
             mAdapter.setBloodPressureList(data);
 
             mTvEmptyData.setVisibility(View.GONE);
-//            mRvBloodPressure.setAdapter(adapter);
         }
     }
 

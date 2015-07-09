@@ -3,14 +3,12 @@ package me.yeojoy.foryou;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.input.InputActivity;
 
-public class MainActivity extends AppCompatActivity implements Consts {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -49,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements Consts {
             Intent intent = new Intent(mContext, InputActivity.class);
             intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_SUGAR);
             startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

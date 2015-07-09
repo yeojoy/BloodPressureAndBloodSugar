@@ -8,6 +8,16 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="Widget.MyApp.ActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/primary</item>
+        <item name="theme">@style/ThemeOverlay.MyApp.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/text</item>
+    </style>
+
     <style name="InputTitle">
         <item name="android:textSize">24dp</item>
         <item name="android:textColor">@color/primary_text</item>

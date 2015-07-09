@@ -6,14 +6,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.TextView;
 
+import me.yeojoy.foryou.BaseActivity;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 
 /**
  * Created by yeojoy on 15. 7. 3..
  */
-public class InputActivity extends AppCompatActivity implements Consts {
+public class InputActivity extends BaseActivity {
 
     private static final String TAG = InputActivity.class.getSimpleName();
 
@@ -32,6 +35,7 @@ public class InputActivity extends AppCompatActivity implements Consts {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (getIntent() != null) {
 
@@ -48,18 +52,29 @@ public class InputActivity extends AppCompatActivity implements Consts {
                     InputBloodPressureFragment fragment = new InputBloodPressureFragment();
 
                     transaction.add(R.id.container, fragment).commit();
-                    getSupportActionBar().setTitle(R.string.title_input_blood_pressure);
+                    getSupportActionBar().setTitle(getResources()
+                            .getString(R.string.title_input_blood_pressure));
                     break;
                 }
                 case INPUT_TYPE_BLOOD_SUGAR: {
                     InputBloodSugarFragment fragment = new InputBloodSugarFragment();
 
                     transaction.add(R.id.container, fragment).commit();
-                    getSupportActionBar().setTitle(R.string.title_input_blood_sugar);
+                    getSupportActionBar().setTitle(getResources()
+                            .getString(R.string.title_input_blood_sugar));
                     break;
                 }
             }
         }
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

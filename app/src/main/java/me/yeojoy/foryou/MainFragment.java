@@ -54,6 +54,17 @@ public class MainFragment extends Fragment {
         mVpTabs.setAdapter(adapter);
 
         mStlTabTitle = (SlidingTabLayout) view.findViewById(R.id.stl_title_strip);
+        mStlTabTitle.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.accent);
+            }
+
+            @Override
+            public int getDividerColor(int position) {
+                return 0;
+            }
+        });
         mStlTabTitle.setViewPager(mVpTabs);
     }
 
