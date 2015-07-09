@@ -7,6 +7,7 @@ import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.urqa.clientinterface.URQAController;
 
 import me.yeojoy.foryou.config.ApiKey;
 import me.yeojoy.foryou.config.ParseConsts;
@@ -15,6 +16,8 @@ import me.yeojoy.foryou.model.BloodSugar;
 
 /**
  * Created by yeojoy on 15. 7. 3..
+ *
+ * You need an ApiKey interface, it has api keys of Parse and URQA.
  */
 public class ForYouApplication extends Application implements ApiKey {
 
@@ -42,5 +45,7 @@ public class ForYouApplication extends Application implements ApiKey {
         // Optionally enable public read access.
         // defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
+
+        URQAController.InitializeAndStartSession(this, URQA_API_KEY);
     }
 }

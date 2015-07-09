@@ -2,6 +2,7 @@ package me.yeojoy.foryou;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,12 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
+import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.input.InputActivity;
 import me.yeojoy.foryou.view.SlidingTabLayout;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements Consts {
 
     public static final String TAG = MainFragment.class.getSimpleName();
 
@@ -27,6 +33,8 @@ public class MainFragment extends Fragment {
     private SlidingTabLayout mStlTabTitle;
 
     private Toolbar mToolbar;
+
+    private FloatingActionMenu mFamInputMenu;
 
     @Override
     public void onAttach(Activity activity) {
@@ -57,7 +65,7 @@ public class MainFragment extends Fragment {
         mStlTabTitle.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.accent);
+                return getResources().getColor(R.color.tab_indicator);
             }
 
             @Override
@@ -66,6 +74,17 @@ public class MainFragment extends Fragment {
             }
         });
         mStlTabTitle.setViewPager(mVpTabs);
+
+        mFamInputMenu = (FloatingActionMenu) view.findViewById(R.id.fam_input_menu);
+        mFamInputMenu.showMenuButton(true);
+        mFamInputMenu.setClosedOnTouchOutside(true);
+
+        FloatingActionButton fabInputBloodPressure = (FloatingActionButton)
+                mFamInputMenu.findViewById(R.id.fab_input_blood_pressure);
+        FloatingActionButton fabInputBloodSugar = (FloatingActionButton)
+                mFamInputMenu.findViewById(R.id.fab_input_blood_sugar);
+        fabInputBloodPressure.setOnClickListener(mBtnClickListener);
+        fabInputBloodSugar.setOnClickListener(mBtnClickListener);
     }
 
     public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
@@ -105,4 +124,27 @@ public class MainFragment extends Fragment {
             }
         }
     }
+
+    private View.OnClickListener mBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.fab_input_blood_pressure: {
+
+                    Intent intent = new Intent(mContext, InputActivity.class);
+                    intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_PRESSURE);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.fab_input_blood_sugar: {
+                    Intent intent = new Intent(mContext, InputActivity.class);
+                    intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_SUGAR);
+                    startActivity(intent);
+                    break;
+                }
+            }
+
+            mFamInputMenu.close(false);
+        }
+    };
 }

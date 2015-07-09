@@ -9,4 +9,9 @@
     <color name="secondary_text">#727272</color>
     <color name="divider">#b6b6b6</color>
 
+    <color name="tab_indicator">#EDE7F6</color>
+
+    <color name="fab_default_color">@color/accent</color>
+    <color name="fab_default_color_pressed">#0288D1</color>
+    <color name="fab_default_color_ripple">#81D4FA</color>
 </resources>

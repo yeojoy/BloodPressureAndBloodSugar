@@ -18,3 +18,8 @@ allprojects {
         jcenter()
     }
 }
+
+ext {
+    VERSION_CODE = 2
+    VERSION_NAME = "1.0.1"
+}

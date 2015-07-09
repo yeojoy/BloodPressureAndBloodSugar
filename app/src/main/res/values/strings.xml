@@ -6,8 +6,8 @@
 
     <string name="title_blood_pressure">혈압</string>
     <string name="title_blood_sugar">혈당</string>
-    <string name="title_input_blood_pressure">혈압입력</string>
-    <string name="title_input_blood_sugar">혈당입력</string>
+    <string name="title_input_blood_pressure">혈압 입력</string>
+    <string name="title_input_blood_sugar">혈당 입력</string>
 
     <string name="label_blood_date">날짜</string>
     <string name="label_blood_time">시간</string>
@@ -42,7 +42,7 @@
     <string name="unit_blood_sugar">mg/dL</string>
     <string name="unit_weight">kg</string>
 
-    <string name="empty_data">가져올 데이터가 없습니다.</string>
+    <string name="empty_data">데이터가 없습니다.</string>
 
     <!-- toast warning -->
     <string name="toast_warning_fail_save_blood_pressure">데이터를 저장하는데 통신이 원할 하지 않습니다.</string>
