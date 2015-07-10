@@ -23,6 +23,7 @@ import java.util.List;
 import me.yeojoy.foryou.adapter.BloodSugarAdapter;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodSugar;
+import my.lib.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -100,7 +101,7 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
             try {
                 return query.find();
             } catch (ParseException e) {
-                Log.e(TAG, e.getMessage());
+                MyLog.e(TAG, e.getMessage());
             }
 
             return null;
@@ -111,7 +112,7 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
             super.onPostExecute(data);
 
             if (data == null || data.size() < 1) {
-                Log.e(TAG, "no data.");
+                MyLog.e(TAG, "no data.");
 
                 mTvEmptyData.setVisibility(View.VISIBLE);
                 return;

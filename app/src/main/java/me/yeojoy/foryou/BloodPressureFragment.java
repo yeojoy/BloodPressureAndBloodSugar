@@ -24,6 +24,7 @@ import java.util.List;
 import me.yeojoy.foryou.adapter.BloodPressureAdapter;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodPressure;
+import my.lib.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -103,7 +104,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
             @Override
             public void done(List<BloodPressure> list, ParseException e) {
                 if (list == null || list.size() < 1) {
-                    Log.d(TAG, e.getMessage());
+                    MyLog.d(TAG, e.getMessage());
                     return;
                 }
 
@@ -117,7 +118,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
             @Override
             public void run() {
                 if (list == null || list.size() < 1) {
-                    Log.e(TAG, "no list.");
+                    MyLog.e(TAG, "no list.");
 
                     mTvEmptyData.setVisibility(View.VISIBLE);
                     return;
@@ -141,7 +142,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
             try {
                 return query.find();
             } catch (ParseException e) {
-                Log.e(TAG, e.getMessage());
+                MyLog.e(TAG, e.getMessage());
             }
 
             return null;
@@ -152,7 +153,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
             super.onPostExecute(data);
 
             if (data == null || data.size() < 1) {
-                Log.e(TAG, "no data.");
+                MyLog.e(TAG, "no data.");
 
                 mTvEmptyData.setVisibility(View.VISIBLE);
                 return;

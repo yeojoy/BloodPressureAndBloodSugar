@@ -1,6 +1,5 @@
 package me.yeojoy.foryou.input;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -9,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +25,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import me.yeojoy.foryou.MainActivity;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
+import my.lib.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -80,7 +78,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
         mRgMeasureTime.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d(TAG, "RadioButton checked ID : " + checkedId);
+                MyLog.d(TAG, "RadioButton checked ID : " + checkedId);
                 switch (checkedId) {
                     case R.id.rb_after_two_hours:
                         mMeasureTime = 2;
@@ -131,14 +129,14 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
             try {
                 sugar.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
             } catch (java.text.ParseException e) {
-                Log.e(TAG, e.getMessage());
+                MyLog.e(TAG, e.getMessage());
             }
 
             Boolean isSuccessful = true;
             try {
                 sugar.save();
             } catch (ParseException e) {
-                Log.e(TAG, e.getMessage());
+                MyLog.e(TAG, e.getMessage());
                 isSuccessful = false;
             }
 
@@ -258,7 +256,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
             mBloodSugar
                     = Integer.parseInt(mEtBloodSugar.getText().toString());
         } catch (NumberFormatException e) {
-            Log.e(TAG, mEtBloodSugar.getText().toString() +
+            MyLog.e(TAG, mEtBloodSugar.getText().toString() +
                     " is not the number type.");
             isValid = false;
         }
@@ -276,14 +274,14 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
         String date = mBtnDate.getText().toString();
 
         if (date == null || date.isEmpty()) {
-            Log.e(TAG, "Doesn't set date string.");
+            MyLog.e(TAG, "Doesn't set date string.");
             isValid = false;
         }
 
         String time = mBtnTime.getText().toString();
 
         if (time == null || time.isEmpty()) {
-            Log.e(TAG, "Doesn't set time string.");
+            MyLog.e(TAG, "Doesn't set time string.");
             isValid = false;
         }
 
@@ -298,7 +296,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
         try {
             d = new SimpleDateFormat(DATE_FORMAT).parse(button.getText().toString());
         } catch (java.text.ParseException e) {
-            Log.e(TAG, e.getMessage());
+            MyLog.e(TAG, e.getMessage());
         }
 
         if (d == null) return null;

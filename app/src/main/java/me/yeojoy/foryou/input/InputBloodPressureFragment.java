@@ -29,6 +29,7 @@ import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.utils.CommonUtils;
+import my.lib.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -105,14 +106,14 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
             try {
                 pressure.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
             } catch (java.text.ParseException e) {
-                Log.e(TAG, e.getMessage());
+                MyLog.e(TAG, e.getMessage());
             }
 
             Boolean isSuccessful = true;
             try {
                 pressure.save();
             } catch (ParseException e) {
-                Log.e(TAG, e.getMessage());
+                MyLog.e(TAG, e.getMessage());
                 isSuccessful = false;
             }
 
@@ -234,7 +235,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
             mBloodPressureMax
                     = Float.parseFloat(mEtBloodPressureMax.getText().toString());
         } catch (NumberFormatException e) {
-            Log.e(TAG, mEtBloodPressureMax.getText().toString() +
+            MyLog.e(TAG, mEtBloodPressureMax.getText().toString() +
                     " is not number type.");
             isValid = false;
         }
@@ -243,7 +244,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
             mBloodPressureMin
                     = Float.parseFloat(mEtBloodPressureMin.getText().toString());
         } catch (NumberFormatException e) {
-            Log.e(TAG, mEtBloodPressureMin.getText().toString() +
+            MyLog.e(TAG, mEtBloodPressureMin.getText().toString() +
                     " is not number type.");
             isValid = false;
         }
@@ -252,7 +253,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
             mBloodPulse
                     = Integer.parseInt(mEtBloodPulse.getText().toString());
         } catch (NumberFormatException e) {
-            Log.e(TAG, mEtBloodPulse.getText().toString() +
+            MyLog.e(TAG, mEtBloodPulse.getText().toString() +
                     " is not number type.");
             isValid = false;
         }
@@ -260,14 +261,14 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         String date = mBtnDate.getText().toString();
 
         if (date == null || date.isEmpty()) {
-            Log.e(TAG, "Doesn't set date string.");
+            MyLog.e(TAG, "Doesn't set date string.");
             isValid = false;
         }
 
         String time = mBtnTime.getText().toString();
 
         if (time == null || time.isEmpty()) {
-            Log.e(TAG, "Doesn't set time string.");
+            MyLog.e(TAG, "Doesn't set time string.");
             isValid = false;
         }
 
@@ -282,7 +283,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         try {
             d = new SimpleDateFormat(DATE_FORMAT).parse(button.getText().toString());
         } catch (java.text.ParseException e) {
-            Log.e(TAG, e.getMessage());
+            MyLog.e(TAG, e.getMessage());
         }
 
         if (d == null) return null;

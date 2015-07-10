@@ -57,4 +57,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.github.clans:fab:1.5.3'
+    compile 'com.github.yeojoy:yeojoy_lib:v1.0.0'
 }
