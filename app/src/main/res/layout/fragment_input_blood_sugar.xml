@@ -74,6 +74,11 @@
             style="@style/InputRadioButton"
             android:id="@+id/rb_after_two_hours"
             android:text="@string/label_radio_2_hours" />
+
+        <RadioButton
+            style="@style/InputRadioButton"
+            android:id="@+id/rb_empty"
+            android:text="@string/label_radio_empty" />
     </RadioGroup>
 
     <include

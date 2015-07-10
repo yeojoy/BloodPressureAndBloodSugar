@@ -23,6 +23,7 @@
     <string name="label_radio_immediate">직 후</string>
     <string name="label_radio_1_hour">1시간 후</string>
     <string name="label_radio_2_hours">2시간 후</string>
+    <string name="label_radio_empty">공복</string>
 
     <string name="btn_name_ok">확인</string>
     <string name="btn_name_input">입력</string>

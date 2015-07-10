@@ -18,5 +18,6 @@ public interface Consts {
     String IMMEDIATELY = "직 후";
     String AFTER_ONE_HOUR  = "1시간 후";
     String AFTER_TWO_HOURS = "2시간 후";
+    String EMPTY = "공복";
 
 }

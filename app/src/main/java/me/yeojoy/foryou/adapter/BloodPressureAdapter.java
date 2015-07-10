@@ -2,6 +2,8 @@ package me.yeojoy.foryou.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import java.util.List;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.model.BloodPressure;
+import me.yeojoy.foryou.utils.CommonUtils;
 
 /**
  * Created by yeojoy on 15. 7. 7..
@@ -48,10 +51,21 @@ public class BloodPressureAdapter extends RecyclerView.Adapter<BloodPressureAdap
 
         if (bp == null) return;
 
+        int[] colors = CommonUtils.getTextColorOfBloodPressure(mContext,
+                bp.getBloodPressureMax(), bp.getBloodPressureMin());
+
         holder.tvDate.setText(new SimpleDateFormat(DATE_FORMAT).format(bp.getRegisteredDate()));
         holder.tvTime.setText(new SimpleDateFormat(TIME_FORMAT).format(bp.getRegisteredDate()));
-        holder.tvMax.setText(String.valueOf(bp.getBloodPressureMax()));
-        holder.tvMin.setText(String.valueOf(bp.getBloodPressureMin()));
+
+        SpannableString spannableString = new SpannableString(String.valueOf(bp.getBloodPressureMax()));
+        spannableString.setSpan(new ForegroundColorSpan(colors[0]), 0, spannableString.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        holder.tvMax.setText(spannableString);
+
+        spannableString = new SpannableString(String.valueOf(bp.getBloodPressureMin()));
+        spannableString.setSpan(new ForegroundColorSpan(colors[1]), 0, spannableString.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        holder.tvMin.setText(spannableString);
+
+
         holder.tvPulse.setText(String.valueOf(bp.getBloodPulse()));
     }
 

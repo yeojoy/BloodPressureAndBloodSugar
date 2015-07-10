@@ -2,6 +2,8 @@ package me.yeojoy.foryou.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.model.BloodSugar;
+import me.yeojoy.foryou.utils.CommonUtils;
 
 /**
  * Created by yeojoy on 15. 7. 7..
@@ -51,24 +54,37 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
 
         holder.tvDate.setText(new SimpleDateFormat(DATE_FORMAT).format(bs.getRegisteredDate()));
         holder.tvTime.setText(new SimpleDateFormat(TIME_FORMAT).format(bs.getRegisteredDate()));
-        holder.tvSugar.setText(String.valueOf(bs.getBloodSugar()));
+
+        int color = CommonUtils.getTextColorOfBloodSugar(mContext, bs.getBloodSugar(), bs.getMeasureTime());
+        SpannableString spannableString = new SpannableString(String.valueOf(bs.getBloodSugar()));
+        spannableString.setSpan(new ForegroundColorSpan(color), 0, spannableString.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        holder.tvSugar.setText(spannableString);
 
         String measureTime;
         switch (bs.getMeasureTime()) {
             case 0:
                 measureTime = IMMEDIATELY;
                 break;
+
             case 2:
                 measureTime = AFTER_TWO_HOURS;
                 break;
+
+            case 3:
+                measureTime = EMPTY;
+                break;
+
             default:
                 measureTime = AFTER_ONE_HOUR;
                 break;
         }
+
         holder.tvMeasureTime.setText(measureTime);
 
         if (bs.getWeight() > 0f)
             holder.tvWeight.setText(String.valueOf(bs.getWeight()));
+        else
+            holder.tvWeight.setText("-");
     }
 
     @Override

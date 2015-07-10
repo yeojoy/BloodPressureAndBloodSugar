@@ -81,7 +81,20 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 Log.d(TAG, "RadioButton checked ID : " + checkedId);
-                mMeasureTime = checkedId;
+                switch (checkedId) {
+                    case R.id.rb_after_two_hours:
+                        mMeasureTime = 2;
+                        break;
+                    case R.id.rb_empty:
+                        mMeasureTime = 3;
+                        break;
+                    case R.id.rb_immediatly:
+                        mMeasureTime = 0;
+                        break;
+                    default:
+                        mMeasureTime = 1;
+                        break;
+                }
             }
         });
 
