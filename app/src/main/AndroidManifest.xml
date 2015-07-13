@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".input.InputActivity" />
+        <activity android:name=".graph.GraphActivity" />
     </application>
 
 </manifest>

@@ -80,14 +80,14 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 MyLog.d(TAG, "RadioButton checked ID : " + checkedId);
                 switch (checkedId) {
+                    case R.id.rb_immediatly:
+                        mMeasureTime = 0;
+                        break;
                     case R.id.rb_after_two_hours:
                         mMeasureTime = 2;
                         break;
                     case R.id.rb_empty:
                         mMeasureTime = 3;
-                        break;
-                    case R.id.rb_immediatly:
-                        mMeasureTime = 0;
                         break;
                     default:
                         mMeasureTime = 1;
@@ -187,7 +187,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
                     break;
 
                 case R.id.btn_date: {
-                    Calendar c = getCalendarByString(mBtnDate);
+                    Calendar c = CommonUtils.getCalendarByString(mBtnDate);
 
                     if (c == null) return;
 
@@ -289,22 +289,4 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
 
         return isValid;
     }
-
-    private Calendar getCalendarByString(Button button) {
-
-        Date d = null;
-        try {
-            d = new SimpleDateFormat(DATE_FORMAT).parse(button.getText().toString());
-        } catch (java.text.ParseException e) {
-            MyLog.e(TAG, e.getMessage());
-        }
-
-        if (d == null) return null;
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-
-        return c;
-    }
-
 }

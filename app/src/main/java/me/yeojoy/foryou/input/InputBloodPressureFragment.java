@@ -166,7 +166,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
                     break;
 
                 case R.id.btn_date: {
-                    Calendar c = getCalendarByString(mBtnDate);
+                    Calendar c = CommonUtils.getCalendarByString(mBtnDate);
 
                     if (c == null) return;
 
@@ -276,22 +276,4 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         return isValid;
     }
-
-    private Calendar getCalendarByString(Button button) {
-
-        Date d = null;
-        try {
-            d = new SimpleDateFormat(DATE_FORMAT).parse(button.getText().toString());
-        } catch (java.text.ParseException e) {
-            MyLog.e(TAG, e.getMessage());
-        }
-
-        if (d == null) return null;
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-
-        return c;
-    }
-
 }

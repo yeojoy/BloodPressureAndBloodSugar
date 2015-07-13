@@ -3,14 +3,23 @@ package me.yeojoy.foryou.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import me.yeojoy.foryou.R;
+import me.yeojoy.foryou.config.Consts;
+import my.lib.MyLog;
 
 /**
  * Created by yeojoy on 15. 6. 19..
  */
-public class CommonUtils {
+public class CommonUtils implements Consts {
+
+    private static final String TAG = CommonUtils.class.getSimpleName();
 
     public static void hideKeyboard(Context context, EditText et) {
         InputMethodManager imm =
@@ -83,5 +92,23 @@ public class CommonUtils {
         }
 
         return color;
+    }
+
+    public static Calendar getCalendarByString(Button button) {
+        MyLog.i(TAG, "getCalendarByString()");
+
+        Date d = null;
+        try {
+            d = new SimpleDateFormat(DATE_FORMAT).parse(button.getText().toString());
+        } catch (java.text.ParseException e) {
+            MyLog.e(TAG, e.getMessage());
+        }
+
+        if (d == null) return null;
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+
+        return c;
     }
 }
