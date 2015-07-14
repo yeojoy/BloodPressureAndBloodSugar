@@ -4,14 +4,11 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import me.yeojoy.foryou.BaseActivity;
 import me.yeojoy.foryou.R;
-import me.yeojoy.foryou.config.Consts;
 
 /**
  * Created by yeojoy on 15. 7. 3..

@@ -10,7 +10,6 @@ import com.parse.ParseUser;
 import com.urqa.clientinterface.URQAController;
 
 import me.yeojoy.foryou.config.ApiKey;
-import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.model.BloodSugar;
 

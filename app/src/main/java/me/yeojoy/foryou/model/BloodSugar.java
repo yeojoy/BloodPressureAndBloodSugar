@@ -1,9 +1,6 @@
 package me.yeojoy.foryou.model;
 
 import com.parse.ParseClassName;
-import com.parse.ParseObject;
-
-import java.util.Date;
 
 import me.yeojoy.foryou.config.ParseConsts;
 

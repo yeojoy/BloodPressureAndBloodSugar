@@ -1,12 +1,7 @@
 package me.yeojoy.foryou;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import me.yeojoy.foryou.input.InputActivity;
 
 public class MainActivity extends BaseActivity {
 

@@ -15,10 +15,8 @@ import java.util.List;
 
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
-import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
-import my.lib.MyLog;
 
 /**
  * Created by yeojoy on 15. 7. 7..
