@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 import me.yeojoy.foryou.adapter.BloodPressureAdapter;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodPressure;
-import my.lib.MyLog;
+import me.yeojoy.library.log.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -95,8 +96,6 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
     }
 
     private void showBloodPressureData() {
-        final String BLOOD_PRESSURE_DATE = "blood_pressure";
-
         ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
         query.findInBackground(new FindCallback<BloodPressure>() {
@@ -138,13 +137,16 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
             ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
             query.orderByDescending(PARSE_COMMON_COLUMN_REGISTERED_AT);
 
+            List<BloodPressure> list = null;
             try {
-                return query.find();
+                list = query.find();
+                if (list != null)
+                    ParseObject.pinAll(PARSE_BLOOD_PRESSURE_TABLE, list);
             } catch (ParseException e) {
-                MyLog.e(TAG, e.getMessage());
+                MyLog.d(TAG, e.getMessage());
             }
 
-            return null;
+            return list;
         }
 
         @Override

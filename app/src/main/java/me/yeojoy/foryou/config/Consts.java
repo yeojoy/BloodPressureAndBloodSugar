@@ -20,4 +20,8 @@ public interface Consts {
     String AFTER_TWO_HOURS = "2시간 후";
     String EMPTY = "공복";
 
+    String BLOOD_PRESSURE_MAX_X_LABEL = "Max";
+    String BLOOD_PRESSURE_MIN_X_LABEL = "Min";
+    String BLOOD_PRESSURE_PULSE_X_LABEL = "Pulse";
+
 }

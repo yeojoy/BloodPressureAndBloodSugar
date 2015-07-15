@@ -1,6 +1,7 @@
 package me.yeojoy.foryou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -15,13 +16,15 @@ import java.util.List;
 
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.graph.GraphActivity;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.utils.CommonUtils;
 
 /**
  * Created by yeojoy on 15. 7. 7..
  */
-public class BloodPressureAdapter extends RecyclerView.Adapter<BloodPressureAdapter.ItemViewHolder>
+public class BloodPressureAdapter
+        extends RecyclerView.Adapter<BloodPressureAdapter.ItemViewHolder>
         implements Consts {
 
     private static final String TAG = BloodPressureAdapter.class.getSimpleName();
@@ -54,20 +57,41 @@ public class BloodPressureAdapter extends RecyclerView.Adapter<BloodPressureAdap
         int[] colors = CommonUtils.getTextColorOfBloodPressure(mContext,
                 bp.getBloodPressureMax(), bp.getBloodPressureMin());
 
-        holder.tvDate.setText(new SimpleDateFormat(DATE_FORMAT).format(bp.getRegisteredDate()));
-        holder.tvTime.setText(new SimpleDateFormat(TIME_FORMAT).format(bp.getRegisteredDate()));
+        holder.tvDate.setText(new SimpleDateFormat(DATE_FORMAT)
+                .format(bp.getRegisteredDate()));
+        holder.tvTime.setText(new SimpleDateFormat(TIME_FORMAT)
+                .format(bp.getRegisteredDate()));
 
-        SpannableString spannableString = new SpannableString(String.valueOf(bp.getBloodPressureMax()));
-        spannableString.setSpan(new ForegroundColorSpan(colors[0]), 0, spannableString.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        SpannableString spannableString
+                = new SpannableString(String.valueOf(bp.getBloodPressureMax()));
+        spannableString.setSpan(new ForegroundColorSpan(colors[0]),
+                0, spannableString.length(),
+                SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
         holder.tvMax.setText(spannableString);
 
-        spannableString = new SpannableString(String.valueOf(bp.getBloodPressureMin()));
-        spannableString.setSpan(new ForegroundColorSpan(colors[1]), 0, spannableString.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString
+                = new SpannableString(String.valueOf(bp.getBloodPressureMin()));
+        spannableString.setSpan(new ForegroundColorSpan(colors[1]),
+                0, spannableString.length(),
+                SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
         holder.tvMin.setText(spannableString);
 
 
         holder.tvPulse.setText(String.valueOf(bp.getBloodPulse()));
+
+        holder.tvMax.setOnClickListener(mListener);
+        holder.tvMin.setOnClickListener(mListener);
+        holder.tvPulse.setOnClickListener(mListener);
+
     }
+
+    private View.OnClickListener mListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, GraphActivity.class);
+            mContext.startActivity(intent);
+        }
+    };
 
     @Override
     public int getItemCount() {

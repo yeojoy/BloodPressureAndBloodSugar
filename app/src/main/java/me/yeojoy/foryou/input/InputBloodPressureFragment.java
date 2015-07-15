@@ -28,7 +28,7 @@ import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.utils.CommonUtils;
-import my.lib.MyLog;
+import me.yeojoy.library.log.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.

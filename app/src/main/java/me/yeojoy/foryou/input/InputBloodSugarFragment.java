@@ -30,7 +30,7 @@ import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
-import my.lib.MyLog;
+import me.yeojoy.library.log.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.

@@ -22,7 +22,7 @@ import java.util.List;
 import me.yeojoy.foryou.adapter.BloodSugarAdapter;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodSugar;
-import my.lib.MyLog;
+import me.yeojoy.library.log.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.

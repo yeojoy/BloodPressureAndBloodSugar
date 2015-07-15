@@ -12,7 +12,7 @@ import java.util.Date;
 
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
-import my.lib.MyLog;
+import me.yeojoy.library.log.MyLog;
 
 /**
  * Created by yeojoy on 15. 6. 19..

@@ -43,4 +43,14 @@ public class BloodSugar extends BaseParseObject {
         put(PARSE_BS_COLUMN_WEIGHT, min);
     }
 
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("[ Sugar : ").append(getBloodSugar()).append(", ")
+                .append("Measure Time : ").append(getMeasureTime()).append(", ")
+                .append("Weight : ").append(getWeight()).append(", ")
+                .append("Registered Date : ").append(getRegisteredDate()).append(" ]")
+                .toString();
+    }
 }

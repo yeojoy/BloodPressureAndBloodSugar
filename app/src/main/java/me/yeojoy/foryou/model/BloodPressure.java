@@ -34,4 +34,13 @@ public class BloodPressure extends BaseParseObject {
         put(PARSE_BP_COLUMN_PULSE, pulse);
     }
 
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("[ Max : ").append(getBloodPressureMax()).append(", ")
+                .append("Min : ").append(getBloodPressureMin()).append(", ")
+                .append("Pulse : ").append(getBloodPulse()).append(", ")
+                .append("Registered Date : ").append(getRegisteredDate()).append(" ]")
+                .toString();
+    }
 }
