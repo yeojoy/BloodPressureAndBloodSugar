@@ -32,6 +32,8 @@ public class BloodPressureAdapter
     private Context mContext;
     private List<BloodPressure> mBloodPressureList;
 
+    private int mPosition;
+
     public BloodPressureAdapter(Context context, List<BloodPressure> list) {
         mContext = context;
         if (list != null)
@@ -53,6 +55,8 @@ public class BloodPressureAdapter
         BloodPressure bp = mBloodPressureList.get(position);
 
         if (bp == null) return;
+
+        mPosition = position;
 
         int[] colors = CommonUtils.getTextColorOfBloodPressure(mContext,
                 bp.getBloodPressureMax(), bp.getBloodPressureMin());
@@ -89,6 +93,8 @@ public class BloodPressureAdapter
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, GraphActivity.class);
+            intent.putExtra(KEY_GRAPH_ITEM_POSITON, mPosition);
+            intent.putExtra(KEY_GRAPH_TYPE, GRAPH_TYPE_BLOOD_PRESSURE);
             mContext.startActivity(intent);
         }
     };

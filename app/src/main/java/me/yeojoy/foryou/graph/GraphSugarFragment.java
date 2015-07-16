@@ -25,19 +25,22 @@ import java.util.List;
 
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
-import me.yeojoy.foryou.model.BloodPressure;
+import me.yeojoy.foryou.config.ParseConsts;
+import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.library.log.MyLog;
 
 /**
  * Created by yeojoy on 15. 7. 13..
  */
-public class GraphFragment extends Fragment implements Consts {
+public class GraphSugarFragment extends Fragment implements Consts, ParseConsts {
 
-    private static final String TAG = GraphFragment.class.getSimpleName();
+    private static final String TAG = GraphSugarFragment.class.getSimpleName();
 
     private Context mContext;
 
     private LineChart mLcBlood;
+
+    private int mPosition = -1;
 
     @Override
     public void onAttach(Activity activity) {
@@ -49,74 +52,79 @@ public class GraphFragment extends Fragment implements Consts {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_graph, container);
+        return inflater.inflate(R.layout.fragment_graph, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mLcBlood = (LineChart) view.findViewById(R.id.lc_blood);
+        mLcBlood.setBackgroundColor(Color.WHITE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        queryBloodPressureData();
+        queryBloodSugarData();
+
+        if (getArguments() != null) {
+            mPosition = getArguments().getInt(KEY_GRAPH_ITEM_POSITON);
+            MyLog.d(TAG, "Position >>>>>>>> " + mPosition);
+        }
     }
 
-    private void queryBloodPressureData() {
-        ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
+    private void queryBloodSugarData() {
+        MyLog.i(TAG);
+
+        ParseQuery<BloodSugar> query = ParseQuery.getQuery(BloodSugar.class);
 //        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
-        query.findInBackground(new FindCallback<BloodPressure>() {
+        query.orderByAscending(PARSE_COMMON_COLUMN_REGISTERED_AT);
+        query.findInBackground(new FindCallback<BloodSugar>() {
             @Override
-            public void done(List<BloodPressure> list, ParseException e) {
+            public void done(List<BloodSugar> list, ParseException e) {
                 if (list == null || list.size() < 1) {
                     MyLog.d(TAG, e.getMessage());
                     return;
                 }
 
-                displayData(list);
+                displayBloodSugarData(list);
             }
         });
 
     }
 
-    private void displayData(List<BloodPressure> list) {
-        List<Entry> maxList = new ArrayList<>();
-        List<Entry> minList = new ArrayList<>();
-        List<Entry> pulseList = new ArrayList<>();
+    private void displayBloodSugarData(List<BloodSugar> list) {
+        MyLog.i(TAG);
+        List<Entry> sugarList = new ArrayList<>();
+        List<Entry> weightList = new ArrayList<>();
         // X 좌표 이름
         List<String> xVals = new ArrayList<>();
         List<LineDataSet> dataSets = new ArrayList<>();
 
         for (int i = 0, j = list.size(); i < j; i++) {
-            BloodPressure bp = list.get(i);
-            Entry max = new Entry(bp.getBloodPressureMax(), i);
-            Entry min = new Entry(bp.getBloodPressureMin(), i);
-            Entry pulse = new Entry(bp.getBloodPulse(), i);
-            String date = new SimpleDateFormat(DATE_TIME_FORMAT).format(bp.getRegisteredDate());
+            BloodSugar bs = list.get(i);
+            Entry max = new Entry(bs.getBloodSugar(), i);
+            Entry min = new Entry(bs.getWeight(), i);
+            String date = new SimpleDateFormat(DATE_TIME_FORMAT).format(bs.getRegisteredDate());
 
-            maxList.add(max);
-            minList.add(min);
-            pulseList.add(pulse);
+            sugarList.add(max);
+            weightList.add(min);
             xVals.add(date);
         }
 
-        LineDataSet lineDataSet1 = new LineDataSet(maxList, BLOOD_PRESSURE_MAX_X_LABEL);
+        LineDataSet lineDataSet1 = new LineDataSet(sugarList, BLOOD_PRESSURE_MAX_X_LABEL);
         lineDataSet1.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet1.setColor(Color.BLUE);
-        LineDataSet lineDataSet2 = new LineDataSet(minList, BLOOD_PRESSURE_MIN_X_LABEL);
+        LineDataSet lineDataSet2 = new LineDataSet(weightList, BLOOD_PRESSURE_MIN_X_LABEL);
         lineDataSet2.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet2.setColor(Color.RED);
-        LineDataSet lineDataSet3 = new LineDataSet(pulseList, BLOOD_PRESSURE_PULSE_X_LABEL);
-        lineDataSet3.setAxisDependency(YAxis.AxisDependency.LEFT);
-        lineDataSet3.setColor(Color.GREEN);
 
         dataSets.add(lineDataSet1);
         dataSets.add(lineDataSet2);
-        dataSets.add(lineDataSet3);
 
         LineData lineData = new LineData(xVals, dataSets);
         mLcBlood.setData(lineData);
+        mLcBlood.setHighlightEnabled(true);
+        if (mPosition > -1) mLcBlood.highlightValue(mPosition, mPosition);
         mLcBlood.invalidate();
     }
 }

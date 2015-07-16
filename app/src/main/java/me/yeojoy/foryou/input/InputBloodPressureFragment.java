@@ -42,8 +42,8 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     private EditText mEtBloodPressureMax, mEtBloodPressureMin, mEtBloodPulse;
     private Button mBtnSave, mBtnDate, mBtnTime;
 
-    private float mBloodPressureMax = 0f;
-    private float mBloodPressureMin = 0f;
+    private int mBloodPressureMax = 0;
+    private int mBloodPressureMin = 0;
     private int mBloodPulse = 0;
 
     private String mDateTime;
@@ -132,8 +132,8 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
                 mEtBloodPressureMin.setText("");
                 mEtBloodPulse.setText("");
 
-                mBloodPressureMax = 0f;
-                mBloodPressureMin = 0f;
+                mBloodPressureMax = 0;
+                mBloodPressureMin = 0;
                 mBloodPulse = 0;
 
                 CommonUtils.hideKeyboard(mContext, mEtBloodPulse);
@@ -232,7 +232,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         try {
             mBloodPressureMax
-                    = Float.parseFloat(mEtBloodPressureMax.getText().toString());
+                    = Integer.parseInt(mEtBloodPressureMax.getText().toString());
         } catch (NumberFormatException e) {
             MyLog.e(TAG, mEtBloodPressureMax.getText().toString() +
                     " is not number type.");
@@ -241,7 +241,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         try {
             mBloodPressureMin
-                    = Float.parseFloat(mEtBloodPressureMin.getText().toString());
+                    = Integer.parseInt(mEtBloodPressureMin.getText().toString());
         } catch (NumberFormatException e) {
             MyLog.e(TAG, mEtBloodPressureMin.getText().toString() +
                     " is not number type.");

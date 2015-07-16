@@ -1,6 +1,7 @@
 package me.yeojoy.foryou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.graph.GraphActivity;
 import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
 
@@ -28,6 +30,8 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
 
     private Context mContext;
     private List<BloodSugar> mBloodSugarList;
+
+    private int mPosition;
 
     public BloodSugarAdapter(Context context, List<BloodSugar> list) {
         mContext = context;
@@ -50,6 +54,8 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
         BloodSugar bs = mBloodSugarList.get(position);
 
         if (bs == null) return;
+
+        mPosition = position;
 
         holder.tvDate.setText(new SimpleDateFormat(DATE_FORMAT).format(bs.getRegisteredDate()));
         holder.tvTime.setText(new SimpleDateFormat(TIME_FORMAT).format(bs.getRegisteredDate()));
@@ -84,7 +90,21 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
             holder.tvWeight.setText(String.valueOf(bs.getWeight()));
         else
             holder.tvWeight.setText("-");
+
+        holder.tvSugar.setOnClickListener(mListener);
+        holder.tvMeasureTime.setOnClickListener(mListener);
+        holder.tvWeight.setOnClickListener(mListener);
     }
+
+    private View.OnClickListener mListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, GraphActivity.class);
+            intent.putExtra(KEY_GRAPH_ITEM_POSITON, mPosition);
+            intent.putExtra(KEY_GRAPH_TYPE, GRAPH_TYPE_BLOOD_SUGAR);
+            mContext.startActivity(intent);
+        }
+    };
 
     @Override
     public int getItemCount() {

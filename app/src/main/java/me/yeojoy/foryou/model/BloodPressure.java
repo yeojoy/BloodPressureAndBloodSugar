@@ -10,19 +10,19 @@ import me.yeojoy.foryou.config.ParseConsts;
 @ParseClassName(ParseConsts.PARSE_BLOOD_PRESSURE_TABLE)
 public class BloodPressure extends BaseParseObject {
 
-    public float getBloodPressureMax() {
-        return getNumber(PARSE_BP_COLUMN_MAX).floatValue();
+    public int getBloodPressureMax() {
+        return getNumber(PARSE_BP_COLUMN_MAX).intValue();
     }
 
-    public void setBloodPressureMax(float max) {
+    public void setBloodPressureMax(int max) {
         put(PARSE_BP_COLUMN_MAX, max);
     }
 
-    public float getBloodPressureMin() {
-        return getNumber(PARSE_BP_COLUMN_MIN).floatValue();
+    public int getBloodPressureMin() {
+        return getNumber(PARSE_BP_COLUMN_MIN).intValue();
     }
 
-    public void setBloodPressureMin(float min) {
+    public void setBloodPressureMin(int min) {
         put(PARSE_BP_COLUMN_MIN, min);
     }
 

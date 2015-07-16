@@ -6,9 +6,15 @@ package me.yeojoy.foryou.config;
 public interface Consts {
     /** Activity 이동 */
     String KEY_INPUT_TYPE = "input_type";
+    String KEY_GRAPH_TYPE = "graph_type";
+    String KEY_GRAPH_ITEM_POSITON = "position";
+
 
     int INPUT_TYPE_BLOOD_PRESSURE   = 0x000001;
     int INPUT_TYPE_BLOOD_SUGAR      = 0x000002;
+
+    int GRAPH_TYPE_BLOOD_PRESSURE   = 0x000003;
+    int GRAPH_TYPE_BLOOD_SUGAR      = 0x000004;
 
     /** date format */
     String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
@@ -23,5 +29,7 @@ public interface Consts {
     String BLOOD_PRESSURE_MAX_X_LABEL = "Max";
     String BLOOD_PRESSURE_MIN_X_LABEL = "Min";
     String BLOOD_PRESSURE_PULSE_X_LABEL = "Pulse";
+
+
 
 }
