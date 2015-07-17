@@ -23,7 +23,9 @@ import com.parse.ParseObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
+import me.yeojoy.foryou.BuildConfig;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.model.BloodPressure;
@@ -57,14 +59,28 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        MyLog.i(TAG);
         return inflater.inflate(R.layout.fragment_input_blood_pressure, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MyLog.i(TAG);
 
+        if (BuildConfig.DEBUG) {
+            // Test data 추가.
+            view.findViewById(R.id.tv_fragment_title).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
 
+                    SavingTestDataAsyncTask task = new SavingTestDataAsyncTask();
+                    task.execute();
+
+                    return true;
+                }
+            });
+        }
 
         mEtBloodPressureMax = (EditText) view.findViewById(R.id.et_blood_pressure_max);
         mEtBloodPressureMin = (EditText) view.findViewById(R.id.et_blood_pressure_min);
@@ -82,6 +98,15 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         mBtnDate.setOnClickListener(mButtonClickListener);
         mBtnTime.setOnClickListener(mButtonClickListener);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        MyLog.i(TAG);
+        Bundle args = getArguments();
+        if (args.getInt("key", -1) < 0)
+            Toast.makeText(mContext, "hhhhh", Toast.LENGTH_SHORT).show();
     }
 
     private class SavingAsyncTask extends AsyncTask<Float, Void, Boolean> {
@@ -149,6 +174,40 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         }
     }
 
+    private class SavingTestDataAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            Calendar c = Calendar.getInstance();
+
+            c.set(2015, 5, 1, 8, 30);
+
+            for (int i = 0; i < 100; i++) {
+                BloodPressure pressure = ParseObject.create(BloodPressure.class);
+
+                Random random = new Random();
+
+                pressure.setBloodPressureMax(random.nextInt(50) + 100);
+                pressure.setBloodPressureMin(random.nextInt(30) + 70);
+                pressure.setBloodPulse(random.nextInt(40) + 50);
+
+                c.add(Calendar.HOUR_OF_DAY, 12);
+
+                pressure.setRegisteredDate(c.getTime());
+
+                MyLog.d(TAG, "BloodPressure >>>>>>> " + pressure.toString());
+
+                try {
+                    pressure.save();
+                } catch (ParseException e) {
+                    MyLog.e(TAG, e.getMessage());
+                }
+            }
+
+            return null;
+        }
+    }
 
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override

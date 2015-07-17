@@ -22,6 +22,7 @@ import java.util.List;
 import me.yeojoy.foryou.adapter.BloodSugarAdapter;
 import me.yeojoy.foryou.config.ParseConsts;
 import me.yeojoy.foryou.model.BloodSugar;
+import me.yeojoy.foryou.view.DividerItemDecoration;
 import me.yeojoy.library.log.MyLog;
 
 /**
@@ -62,6 +63,8 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
         LinearLayout llHeader = (LinearLayout) view.findViewById(R.id.ll_header);
 
         mRvBloodPressure = (RecyclerView) view.findViewById(R.id.rv_blood_pressure);
+        mRvBloodPressure.addItemDecoration(new DividerItemDecoration(mContext,
+                DividerItemDecoration.VERTICAL_LIST));
         mTvEmptyData = (TextView) view.findViewById(R.id.tv_empty_data);
 
         mAdapter = new BloodSugarAdapter(mContext, null);

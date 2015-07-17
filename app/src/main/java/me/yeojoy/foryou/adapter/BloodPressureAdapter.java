@@ -1,6 +1,8 @@
 package me.yeojoy.foryou.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -9,6 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +25,9 @@ import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.graph.GraphActivity;
 import me.yeojoy.foryou.model.BloodPressure;
+import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
+import me.yeojoy.library.log.MyLog;
 
 /**
  * Created by yeojoy on 15. 7. 7..
@@ -34,6 +43,8 @@ public class BloodPressureAdapter
 
     private int mPosition;
 
+    private ItemViewHolder viewHolder;
+
     public BloodPressureAdapter(Context context, List<BloodPressure> list) {
         mContext = context;
         if (list != null)
@@ -46,7 +57,7 @@ public class BloodPressureAdapter
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.row_blood_pressure, parent, false);
-        ItemViewHolder viewHolder = new ItemViewHolder(view);
+        viewHolder = new ItemViewHolder(view);
         return viewHolder;
     }
 
@@ -83,30 +94,26 @@ public class BloodPressureAdapter
 
         holder.tvPulse.setText(String.valueOf(bp.getBloodPulse()));
 
-        holder.tvMax.setOnClickListener(mListener);
-        holder.tvMin.setOnClickListener(mListener);
-        holder.tvPulse.setOnClickListener(mListener);
+
+        holder.tvMax.setOnClickListener(new PressureClickListener(position));
+        holder.tvMin.setOnClickListener(new PressureClickListener(position));
+        holder.tvPulse.setOnClickListener(new PressureClickListener(position));
+
+        holder.tvDate.setOnLongClickListener(new PressureLongClickListener(position));
+        holder.tvTime.setOnLongClickListener(new PressureLongClickListener(position));
 
     }
-
-    private View.OnClickListener mListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(mContext, GraphActivity.class);
-            intent.putExtra(KEY_GRAPH_ITEM_POSITON, mPosition);
-            intent.putExtra(KEY_GRAPH_TYPE, GRAPH_TYPE_BLOOD_PRESSURE);
-            mContext.startActivity(intent);
-        }
-    };
 
     @Override
     public int getItemCount() {
         return mBloodPressureList.size();
     }
 
+
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView tvDate, tvTime, tvMax, tvMin, tvPulse;
+
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -115,6 +122,83 @@ public class BloodPressureAdapter
             tvMax = (TextView) itemView.findViewById(R.id.tv_blood_pressure_max);
             tvMin = (TextView) itemView.findViewById(R.id.tv_blood_pressure_min);
             tvPulse = (TextView) itemView.findViewById(R.id.tv_blood_pulse);
+        }
+
+    }
+
+    private class PressureClickListener implements View.OnClickListener {
+
+        private int mPosition;
+
+        public PressureClickListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            MyLog.i(TAG);
+            MyLog.d(TAG, "Postion >>>>> " + mPosition);
+            Intent intent = new Intent(mContext, GraphActivity.class);
+            intent.putExtra(KEY_GRAPH_ITEM_POSITON, mPosition);
+            intent.putExtra(KEY_GRAPH_TYPE, GRAPH_TYPE_BLOOD_PRESSURE);
+            mContext.startActivity(intent);
+        }
+    }
+
+    private class PressureLongClickListener implements View.OnLongClickListener {
+
+        private int mPosition;
+
+        public PressureLongClickListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            MyLog.i(TAG);
+            MyLog.d(TAG, "Postion >>>>> " + mPosition);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+            BloodPressure bp = mBloodPressureList.get(mPosition);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(new SimpleDateFormat(DATE_TIME_FORMAT).format(bp.getRegisteredDate()));
+            sb.append("에 측정한").append("\n");
+            sb.append("Max : ").append(bp.getBloodPressureMax());
+            sb.append(", Min : ").append(bp.getBloodPressureMin());
+            sb.append(", Pulse : ").append(bp.getBloodPulse());
+            sb.append("\n\n").append("데이터를 삭제 하시겠습니까?");
+            builder.setMessage(sb);
+
+            builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MyLog.i(TAG);
+                    MyLog.d(TAG, "Postion >>> " +  mPosition);
+
+                    BloodPressure bp = mBloodPressureList.get(mPosition);
+                    bp.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Toast.makeText(mContext, "삭제 했습니다.", Toast.LENGTH_SHORT).show();
+
+                            notifyDataSetChanged();
+                        }
+                    });
+                }
+            });
+
+            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.create().show();
+
+            return true;
         }
     }
 

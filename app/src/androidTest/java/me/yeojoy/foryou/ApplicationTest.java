@@ -228,8 +228,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> implements
             @Override
             public void done(BloodPressure bloodPressure, ParseException e) {
                 MyLog.i(TAG);
-
-                bloodPressure.deleteInBackground();
+                if (bloodPressure != null)
+                    bloodPressure.deleteInBackground();
 
                 signal.countDown();
             }
