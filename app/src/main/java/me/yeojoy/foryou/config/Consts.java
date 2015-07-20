@@ -9,6 +9,15 @@ public interface Consts {
     String KEY_GRAPH_TYPE = "graph_type";
     String KEY_GRAPH_ITEM_POSITON = "position";
 
+    String KEY_PRESSURE_MAX     = "pressure_max";
+    String KEY_PRESSURE_MIN     = "pressure_min";
+    String KEY_PRESSURE_PULSE   = "pressure_pulse";
+
+    String KEY_SUGAR                = "sugar";
+    String KEY_SUGAR_MEASURED_TIME  = "sugar_measured_time";
+    String KEY_SUGAR_WEIGHT         = "sugar_weight";
+
+    String KEY_DATE_TIME            = "date_time";
 
     int INPUT_TYPE_BLOOD_PRESSURE   = 0x000001;
     int INPUT_TYPE_BLOOD_SUGAR      = 0x000002;
@@ -29,7 +38,5 @@ public interface Consts {
     String BLOOD_PRESSURE_MAX_X_LABEL = "Max";
     String BLOOD_PRESSURE_MIN_X_LABEL = "Min";
     String BLOOD_PRESSURE_PULSE_X_LABEL = "Pulse";
-
-
 
 }
