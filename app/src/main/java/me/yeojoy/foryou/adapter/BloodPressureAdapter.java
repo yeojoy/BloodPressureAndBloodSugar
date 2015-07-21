@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -24,6 +25,7 @@ import java.util.List;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.graph.GraphActivity;
+import me.yeojoy.foryou.input.InputActivity;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
@@ -175,7 +177,7 @@ public class BloodPressureAdapter
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     MyLog.i(TAG);
-                    MyLog.d(TAG, "Postion >>> " +  mPosition);
+                    MyLog.d(TAG, "Postion >>> " + mPosition);
 
                     BloodPressure bp = mBloodPressureList.get(mPosition);
                     bp.deleteInBackground(new DeleteCallback() {
@@ -186,6 +188,22 @@ public class BloodPressureAdapter
                             notifyDataSetChanged();
                         }
                     });
+                }
+            });
+
+            builder.setNeutralButton("수정", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MyLog.i(TAG);
+                    BloodPressure bp = mBloodPressureList.get(mPosition);
+                    Intent intent = new Intent(mContext, InputActivity.class);
+                    Bundle b = new Bundle();
+                    b.putInt(KEY_PRESSURE_MAX, bp.getBloodPressureMax());
+                    b.putInt(KEY_PRESSURE_MIN, bp.getBloodPressureMin());
+                    b.putInt(KEY_PRESSURE_PULSE, bp.getBloodPulse());
+                    b.putLong(KEY_DATE_TIME, bp.getRegisteredDate().getTime());
+                    intent.putExtras(b);
+                    mContext.startActivity(intent);
                 }
             });
 
