@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,6 +51,8 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     private int mBloodPulse = 0;
 
     private String mDateTime;
+
+    private String mObjectId = null;
 
     @Override
     public void onAttach(Activity activity) {
@@ -98,6 +102,30 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         mBtnDate.setOnClickListener(mButtonClickListener);
         mBtnTime.setOnClickListener(mButtonClickListener);
+
+        Bundle b = getArguments();
+
+        if (b != null) {
+            bindDataToView(b);
+
+            mObjectId = b.getString(KEY_OBJECT_ID);
+        }
+
+    }
+
+    private void bindDataToView(Bundle b) {
+        mEtBloodPressureMax.setText(String.valueOf(b.getInt(KEY_PRESSURE_MAX)));
+        mEtBloodPressureMin.setText(String.valueOf(b.getInt(KEY_PRESSURE_MIN)));
+        mEtBloodPulse.setText(String.valueOf(b.getInt(KEY_PRESSURE_PULSE)));
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(b.getLong(KEY_DATE_TIME)));
+        mBtnDate.setText(c.get(Calendar.YEAR) + "-"
+                + (c.get(Calendar.MONTH) + 1) + "-"
+                + c.get(Calendar.DAY_OF_MONTH));
+
+        mBtnTime.setText(c.get(Calendar.HOUR_OF_DAY) + "-"
+                + c.get(Calendar.MINUTE));
     }
 
     @Override
@@ -122,32 +150,56 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         @Override
         protected Boolean doInBackground(Float... params) {
-            BloodPressure pressure = ParseObject.create(BloodPressure.class);
-            pressure.setBloodPressureMax(mBloodPressureMax);
-            pressure.setBloodPressureMin(mBloodPressureMin);
-            pressure.setBloodPulse(mBloodPulse);
+            MyLog.i(TAG);
 
-            try {
-                pressure.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
-            } catch (java.text.ParseException e) {
-                MyLog.e(TAG, e.getMessage());
+            if (mObjectId == null || mObjectId.isEmpty()) {
+                BloodPressure pressure = ParseObject.create(BloodPressure.class);
+                pressure.setBloodPressureMax(mBloodPressureMax);
+                pressure.setBloodPressureMin(mBloodPressureMin);
+                pressure.setBloodPulse(mBloodPulse);
+
+                try {
+                    pressure.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
+                    pressure.save();
+                } catch (java.text.ParseException e) {
+                    MyLog.e(TAG, e);
+                } catch (ParseException e) {
+                    MyLog.e(TAG, e);
+                    return false;
+                }
+
+            } else {
+                MyLog.d(TAG, "Object ID >>>> " + mObjectId);
+                ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
+                try {
+                    BloodPressure pressure = query.get(mObjectId);
+
+                    if (pressure != null) {
+                        pressure.setBloodPressureMax(mBloodPressureMax);
+                        pressure.setBloodPressureMin(mBloodPressureMin);
+                        pressure.setBloodPulse(mBloodPulse);
+
+                        pressure.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
+
+                        pressure.save();
+                    }
+                } catch (ParseException e) {
+                    MyLog.e(TAG, e);
+                } catch (java.text.ParseException e) {
+                    MyLog.e(TAG, e);
+                }
+
+                mObjectId = null;
             }
 
-            Boolean isSuccessful = true;
-            try {
-                pressure.save();
-            } catch (ParseException e) {
-                MyLog.e(TAG, e.getMessage());
-                isSuccessful = false;
-            }
-
-            return isSuccessful;
+            return true;
         }
 
         @Override
         protected void onPostExecute(Boolean isSuccessful) {
             super.onPostExecute(isSuccessful);
 
+            MyLog.i(TAG);
             if (mProgressDialog.isShowing())
                 mProgressDialog.dismiss();
 
@@ -201,7 +253,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
                 try {
                     pressure.save();
                 } catch (ParseException e) {
-                    MyLog.e(TAG, e.getMessage());
+                    MyLog.e(TAG, e);
                 }
             }
 

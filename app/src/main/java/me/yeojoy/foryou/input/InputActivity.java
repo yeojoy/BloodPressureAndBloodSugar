@@ -47,7 +47,8 @@ public class InputActivity extends BaseActivity {
             switch (mCurrentInputType) {
                 case INPUT_TYPE_BLOOD_PRESSURE: {
                     InputBloodPressureFragment fragment = new InputBloodPressureFragment();
-                    fragment.setArguments(getIntent().getExtras());
+                    if (getIntent().getExtras() != null)
+                        fragment.setArguments(getIntent().getExtras());
                     transaction.add(R.id.container, fragment).commit();
                     getSupportActionBar().setTitle(getResources()
                             .getString(R.string.title_input_blood_pressure));
@@ -55,8 +56,8 @@ public class InputActivity extends BaseActivity {
                 }
                 case INPUT_TYPE_BLOOD_SUGAR: {
                     InputBloodSugarFragment fragment = new InputBloodSugarFragment();
-                    fragment.setArguments(getIntent().getExtras());
-
+                    if (getIntent().getExtras() != null)
+                        fragment.setArguments(getIntent().getExtras());
                     transaction.add(R.id.container, fragment).commit();
                     getSupportActionBar().setTitle(getResources()
                             .getString(R.string.title_input_blood_sugar));

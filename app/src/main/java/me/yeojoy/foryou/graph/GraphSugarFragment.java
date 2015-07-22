@@ -2,7 +2,6 @@ package me.yeojoy.foryou.graph;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,8 +35,6 @@ public class GraphSugarFragment extends Fragment implements Consts, ParseConsts 
 
     private static final String TAG = GraphSugarFragment.class.getSimpleName();
 
-    private Context mContext;
-
     private LineChart mLcBlood;
 
     private int mPosition = -1;
@@ -45,8 +42,6 @@ public class GraphSugarFragment extends Fragment implements Consts, ParseConsts 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        mContext = activity;
     }
 
     @Nullable
@@ -82,7 +77,7 @@ public class GraphSugarFragment extends Fragment implements Consts, ParseConsts 
             @Override
             public void done(List<BloodSugar> list, ParseException e) {
                 if (list == null || list.size() < 1) {
-                    MyLog.d(TAG, e.getMessage());
+                    MyLog.d(TAG, e);
                     return;
                 }
 
