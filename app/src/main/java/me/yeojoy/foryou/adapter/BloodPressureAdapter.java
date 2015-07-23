@@ -198,6 +198,7 @@ public class BloodPressureAdapter
                     BloodPressure bp = mBloodPressureList.get(mPosition);
                     Intent intent = new Intent(mContext, InputActivity.class);
                     Bundle b = new Bundle();
+                    b.putString(KEY_OBJECT_ID, bp.getObjectId());
                     b.putInt(KEY_PRESSURE_MAX, bp.getBloodPressureMax());
                     b.putInt(KEY_PRESSURE_MIN, bp.getBloodPressureMin());
                     b.putInt(KEY_PRESSURE_PULSE, bp.getBloodPulse());

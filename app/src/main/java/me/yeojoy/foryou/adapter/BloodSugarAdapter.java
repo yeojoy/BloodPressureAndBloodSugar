@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -23,6 +24,8 @@ import java.util.List;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.graph.GraphActivity;
+import me.yeojoy.foryou.input.InputActivity;
+import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
 import me.yeojoy.library.log.MyLog;
@@ -160,6 +163,23 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
                             notifyDataSetChanged();
                         }
                     });
+                }
+            });
+
+            builder.setNeutralButton("수정", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MyLog.i(TAG);
+                    BloodSugar bp = mBloodSugarList.get(mPosition);
+                    Intent intent = new Intent(mContext, InputActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString(KEY_OBJECT_ID, bp.getObjectId());
+                    b.putInt(KEY_SUGAR, bp.getBloodSugar());
+                    b.putFloat(KEY_SUGAR_WEIGHT, bp.getWeight());
+                    b.putInt(KEY_SUGAR_MEASURED_TIME, bp.getMeasureTime());
+                    b.putLong(KEY_DATE_TIME, bp.getRegisteredDate().getTime());
+                    intent.putExtras(b);
+                    mContext.startActivity(intent);
                 }
             });
 

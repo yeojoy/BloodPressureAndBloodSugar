@@ -105,7 +105,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
             @Override
             public void done(List<BloodPressure> list, ParseException e) {
                 if (list == null || list.size() < 1) {
-                    MyLog.d(TAG, e.getMessage());
+                    MyLog.d(TAG, e);
                     return;
                 }
 
@@ -146,7 +146,7 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
                 if (list != null)
                     ParseObject.pinAll(PARSE_BLOOD_PRESSURE_TABLE, list);
             } catch (ParseException e) {
-                MyLog.d(TAG, e.getMessage());
+                MyLog.d(TAG, e);
             }
 
             return list;

@@ -82,7 +82,7 @@ public class GraphPressureFragment extends Fragment implements Consts, ParseCons
             @Override
             public void done(List<BloodPressure> list, ParseException e) {
                 if (list == null || list.size() < 1) {
-                    MyLog.d(TAG, e.getMessage());
+                    MyLog.d(TAG, e);
                     return;
                 }
 

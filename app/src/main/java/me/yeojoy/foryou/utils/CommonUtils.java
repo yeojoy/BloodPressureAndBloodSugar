@@ -101,7 +101,7 @@ public class CommonUtils implements Consts {
         try {
             d = new SimpleDateFormat(DATE_FORMAT).parse(button.getText().toString());
         } catch (java.text.ParseException e) {
-            MyLog.e(TAG, e.getMessage());
+            MyLog.e(TAG, e);
         }
 
         if (d == null) return null;

@@ -103,7 +103,7 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
             try {
                 return query.find();
             } catch (ParseException e) {
-                MyLog.e(TAG, e.getMessage());
+                MyLog.e(TAG, e);
             }
 
             return null;

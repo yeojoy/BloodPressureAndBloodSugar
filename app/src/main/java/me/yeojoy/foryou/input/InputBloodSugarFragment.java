@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,6 +52,8 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
     private int mMeasureTime = 1;
 
     private String mDateTime;
+
+    private String mObjectId = null;
 
     @Override
     public void onAttach(Activity activity) {
@@ -105,8 +108,47 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
 
         mBtnDate.setOnClickListener(mButtonClickListener);
         mBtnTime.setOnClickListener(mButtonClickListener);
+
+        Bundle b = getArguments();
+
+        if (b != null) {
+            bindDataToView(b);
+
+            mObjectId = b.getString(KEY_OBJECT_ID);
+        }
     }
 
+    private void bindDataToView(Bundle b) {
+
+        mEtBloodSugar.setText(String.valueOf(b.getInt(KEY_SUGAR)));
+        mEtWeight.setText(String.valueOf(b.getFloat(KEY_SUGAR_WEIGHT)));
+
+        int itemId;
+        switch (b.getInt(KEY_SUGAR_MEASURED_TIME)) {
+            case 0:
+                itemId = R.id.rb_immediatly;
+                break;
+            case 2:
+                itemId = R.id.rb_after_two_hours;
+                break;
+            case 3:
+                itemId = R.id.rb_empty;
+                break;
+            default:
+                itemId = R.id.rb_after_one_hour;
+                break;
+        }
+        mRgMeasureTime.check(itemId);
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(b.getLong(KEY_DATE_TIME)));
+        mBtnDate.setText(c.get(Calendar.YEAR) + "-"
+                + (c.get(Calendar.MONTH) + 1) + "-"
+                + c.get(Calendar.DAY_OF_MONTH));
+
+        mBtnTime.setText(c.get(Calendar.HOUR_OF_DAY) + "-"
+                + c.get(Calendar.MINUTE));
+    }
 
     private class SavingAsyncTask extends AsyncTask<Float, Void, Boolean> {
         private ProgressDialog mProgressDialog = new ProgressDialog(mContext);
@@ -121,31 +163,60 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
 
         @Override
         protected Boolean doInBackground(Float... params) {
-            BloodSugar sugar = ParseObject.create(BloodSugar.class);
-            sugar.setBloodSugar(mBloodSugar);
-            sugar.setMeasureTime(mMeasureTime);
-            sugar.setWeight(mWeight);
+            MyLog.i(TAG);
 
-            try {
-                sugar.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
-            } catch (java.text.ParseException e) {
-                MyLog.e(TAG, e.getMessage());
+            if (mObjectId == null || mObjectId.isEmpty()) {
+
+                BloodSugar sugar = ParseObject.create(BloodSugar.class);
+                sugar.setBloodSugar(mBloodSugar);
+                sugar.setMeasureTime(mMeasureTime);
+                sugar.setWeight(mWeight);
+
+                try {
+                    sugar.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
+                } catch (java.text.ParseException e) {
+                    MyLog.e(TAG, e);
+                }
+
+                try {
+                    sugar.save();
+                } catch (ParseException e) {
+                    MyLog.e(TAG, e);
+                    return false;
+                }
+            } else {
+                MyLog.d(TAG, "Object ID >>>> " + mObjectId);
+                ParseQuery<BloodSugar> query = ParseQuery.getQuery(BloodSugar.class);
+                try {
+                    BloodSugar sugar = query.get(mObjectId);
+
+                    if (sugar != null) {
+                        sugar.setBloodSugar(mBloodSugar);
+                        sugar.setWeight(mWeight);
+                        sugar.setMeasureTime(mMeasureTime);
+
+                        sugar.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
+
+                        sugar.save();
+                    }
+                } catch (ParseException e) {
+                    MyLog.e(TAG, e);
+                    return false;
+                } catch (java.text.ParseException e) {
+                    MyLog.e(TAG, e);
+                    return false;
+                }
+
+                mObjectId = null;
             }
 
-            Boolean isSuccessful = true;
-            try {
-                sugar.save();
-            } catch (ParseException e) {
-                MyLog.e(TAG, e.getMessage());
-                isSuccessful = false;
-            }
-
-            return isSuccessful;
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Boolean isSuccessful) {
+        protected void onPostExecute(Boolean isSuccessful){
             super.onPostExecute(isSuccessful);
+            MyLog.i(TAG);
 
             if (mProgressDialog.isShowing())
                 mProgressDialog.dismiss();
@@ -218,7 +289,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
 
                     String[] time = mBtnTime.getText().toString().split(":");
 
-                    if (time == null || time.length != 2) return;
+                    if (time.length != 2) return;
 
                     TimePickerDialog dialog = new TimePickerDialog(mContext,
                             new TimePickerDialog.OnTimeSetListener() {
@@ -262,7 +333,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
         }
 
         String weight = mEtWeight.getText().toString();
-        if (weight != null && !weight.isEmpty()) {
+        if (!weight.isEmpty()) {
             mWeight = Float.parseFloat(weight);
             if (mWeight > 120f || mWeight < 20f) {
                 Toast.makeText(mContext, R.string.toast_warning_not_valid_weight,
@@ -273,19 +344,19 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
 
         String date = mBtnDate.getText().toString();
 
-        if (date == null || date.isEmpty()) {
+        if (date.isEmpty()) {
             MyLog.e(TAG, "Doesn't set date string.");
             isValid = false;
         }
 
         String time = mBtnTime.getText().toString();
 
-        if (time == null || time.isEmpty()) {
+        if (time.isEmpty()) {
             MyLog.e(TAG, "Doesn't set time string.");
             isValid = false;
         }
 
-        mDateTime = new StringBuilder().append(date).append(" ").append(time).toString();
+        mDateTime = date + " " + time;
 
         return isValid;
     }

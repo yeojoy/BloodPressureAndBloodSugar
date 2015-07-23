@@ -9,6 +9,8 @@ public interface Consts {
     String KEY_GRAPH_TYPE = "graph_type";
     String KEY_GRAPH_ITEM_POSITON = "position";
 
+    String KEY_OBJECT_ID        = "object_id";
+
     String KEY_PRESSURE_MAX     = "pressure_max";
     String KEY_PRESSURE_MIN     = "pressure_min";
     String KEY_PRESSURE_PULSE   = "pressure_pulse";
