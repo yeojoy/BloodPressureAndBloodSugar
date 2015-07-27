@@ -8,7 +8,8 @@ Server를 따로 구성하지 않았으며 [parse.com](parse.com)을 사용해�
 
 # How to run
 현재 ApiKey라는 constants가 있는 interface가 .gitignore에 추가된 상태이다.  
-그러므로
+그러므로 Parse의 Application ID와 Client Key를 아래의 코드에 추가해야한다.
+
 ```
 package me.yeojoy.foryou.config;
 
@@ -20,8 +21,6 @@ public interface ApiKey {
 추가해 줘야만 데이터를 저장하고 불러올 수 있다.
 
 # TODO
-- App icon 작업(디자이너 킴)
-- 혈압, 혈당 icon 작업(디자이너 킴)
 - 입력한 data 수정기능.
 - graph를 line과 bar로 표현
 - local db(sqlite3)과 sync 기능
