@@ -114,6 +114,15 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     }
 
     private void bindDataToView(Bundle b) {
+        MyLog.i(TAG);
+
+        if (b.getInt(KEY_PRESSURE_MAX) < 1 ||
+                b.getInt(KEY_PRESSURE_MIN) < 1) {
+            return;
+        }
+
+        MyLog.d(TAG, b.toString());
+
         mEtBloodPressureMax.setText(String.valueOf(b.getInt(KEY_PRESSURE_MAX)));
         mEtBloodPressureMin.setText(String.valueOf(b.getInt(KEY_PRESSURE_MIN)));
         mEtBloodPulse.setText(String.valueOf(b.getInt(KEY_PRESSURE_PULSE)));
@@ -133,8 +142,6 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         super.onStart();
         MyLog.i(TAG);
         Bundle args = getArguments();
-        if (args.getInt("key", -1) < 0)
-            Toast.makeText(mContext, "hhhhh", Toast.LENGTH_SHORT).show();
     }
 
     private class SavingAsyncTask extends AsyncTask<Float, Void, Boolean> {

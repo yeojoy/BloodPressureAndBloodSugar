@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.yeojoy.foryou.MainActivity;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.graph.GraphActivity;
@@ -165,6 +166,7 @@ public class BloodPressureAdapter
             BloodPressure bp = mBloodPressureList.get(mPosition);
 
             StringBuilder sb = new StringBuilder();
+            sb.append("\n");
             sb.append(new SimpleDateFormat(DATE_TIME_FORMAT).format(bp.getRegisteredDate()));
             sb.append("에 측정한").append("\n");
             sb.append("Max : ").append(bp.getBloodPressureMax());
@@ -184,6 +186,7 @@ public class BloodPressureAdapter
                         @Override
                         public void done(ParseException e) {
                             Toast.makeText(mContext, "삭제 했습니다.", Toast.LENGTH_SHORT).show();
+                            mBloodPressureList.remove(mPosition);
 
                             notifyDataSetChanged();
                         }

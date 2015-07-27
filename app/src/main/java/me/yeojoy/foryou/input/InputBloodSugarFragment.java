@@ -119,6 +119,12 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
     }
 
     private void bindDataToView(Bundle b) {
+        MyLog.i(TAG);
+        if (b.getInt(KEY_SUGAR) < 1) {
+            return;
+        }
+
+        MyLog.d(TAG, b.toString());
 
         mEtBloodSugar.setText(String.valueOf(b.getInt(KEY_SUGAR)));
         mEtWeight.setText(String.valueOf(b.getFloat(KEY_SUGAR_WEIGHT)));

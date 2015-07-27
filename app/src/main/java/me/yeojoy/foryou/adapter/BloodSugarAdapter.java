@@ -142,6 +142,7 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
             BloodSugar bs = mBloodSugarList.get(mPosition);
 
             StringBuilder sb = new StringBuilder();
+            sb.append("\n");
             sb.append(new SimpleDateFormat(DATE_TIME_FORMAT).format(bs.getRegisteredDate()));
             sb.append("에 측정한").append("\n");
             sb.append("Sugar : ").append(bs.getBloodSugar());
@@ -159,7 +160,7 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
                         @Override
                         public void done(ParseException e) {
                             Toast.makeText(mContext, "삭제 했습니다.", Toast.LENGTH_SHORT).show();
-
+                            mBloodSugarList.remove(mPosition);
                             notifyDataSetChanged();
                         }
                     });
@@ -170,6 +171,7 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     MyLog.i(TAG);
+                    MyLog.d(TAG, "Postion >>> " + mPosition);
                     BloodSugar bp = mBloodSugarList.get(mPosition);
                     Intent intent = new Intent(mContext, InputActivity.class);
                     Bundle b = new Bundle();
@@ -178,6 +180,8 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
                     b.putFloat(KEY_SUGAR_WEIGHT, bp.getWeight());
                     b.putInt(KEY_SUGAR_MEASURED_TIME, bp.getMeasureTime());
                     b.putLong(KEY_DATE_TIME, bp.getRegisteredDate().getTime());
+
+                    MyLog.d(TAG, b.toString());
                     intent.putExtras(b);
                     mContext.startActivity(intent);
                 }
