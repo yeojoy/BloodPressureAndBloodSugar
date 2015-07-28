@@ -1,11 +1,13 @@
 package me.yeojoy.foryou.input;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,14 +19,18 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import me.yeojoy.foryou.BuildConfig;
@@ -77,10 +83,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
             view.findViewById(R.id.tv_fragment_title).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-
-                    SavingTestDataAsyncTask task = new SavingTestDataAsyncTask();
-                    task.execute();
-
+                    showTestDataDialog();
                     return true;
                 }
             });
@@ -116,8 +119,8 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
     private void bindDataToView(Bundle b) {
         MyLog.i(TAG);
 
-        if (b.getInt(KEY_PRESSURE_MAX) < 1 ||
-                b.getInt(KEY_PRESSURE_MIN) < 1) {
+        if (b.getInt(KEY_PRESSURE_MAX) < 0 ||
+                b.getInt(KEY_PRESSURE_MIN) < 0) {
             return;
         }
 
@@ -129,19 +132,35 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date(b.getLong(KEY_DATE_TIME)));
-        mBtnDate.setText(c.get(Calendar.YEAR) + "-"
-                + (c.get(Calendar.MONTH) + 1) + "-"
-                + c.get(Calendar.DAY_OF_MONTH));
 
-        mBtnTime.setText(c.get(Calendar.HOUR_OF_DAY) + "-"
-                + c.get(Calendar.MINUTE));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(c.get(Calendar.YEAR)).append("-");
+        if (c.get(Calendar.MONTH) < 9)
+            sb.append("0");
+        sb.append(c.get(Calendar.MONTH) + 1).append("-");
+
+        if (c.get(Calendar.DAY_OF_MONTH) < 10)
+            sb.append("0");
+        sb.append(c.get(Calendar.DAY_OF_MONTH));
+
+        mBtnDate.setText(sb);
+
+        sb = new StringBuilder();
+        if (c.get(Calendar.HOUR_OF_DAY) < 10)
+            sb.append("0");
+        sb.append(c.get(Calendar.HOUR_OF_DAY)).append(":");
+        if (c.get(Calendar.MINUTE) < 10)
+            sb.append("0");
+        sb.append(c.get(Calendar.MINUTE));
+        mBtnTime.setText(sb);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
         MyLog.i(TAG);
-        Bundle args = getArguments();
     }
 
     private class SavingAsyncTask extends AsyncTask<Float, Void, Boolean> {
@@ -233,40 +252,6 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         }
     }
 
-    private class SavingTestDataAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            Calendar c = Calendar.getInstance();
-
-            c.set(2015, 5, 1, 8, 30);
-
-            for (int i = 0; i < 100; i++) {
-                BloodPressure pressure = ParseObject.create(BloodPressure.class);
-
-                Random random = new Random();
-
-                pressure.setBloodPressureMax(random.nextInt(50) + 100);
-                pressure.setBloodPressureMin(random.nextInt(30) + 70);
-                pressure.setBloodPulse(random.nextInt(40) + 50);
-
-                c.add(Calendar.HOUR_OF_DAY, 12);
-
-                pressure.setRegisteredDate(c.getTime());
-
-                MyLog.d(TAG, "BloodPressure >>>>>>> " + pressure.toString());
-
-                try {
-                    pressure.save();
-                } catch (ParseException e) {
-                    MyLog.e(TAG, e);
-                }
-            }
-
-            return null;
-        }
-    }
 
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
@@ -392,5 +377,115 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
         mDateTime = new StringBuilder().append(date).append(" ").append(time).toString();
 
         return isValid;
+    }
+
+
+    private void showTestDataDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage(R.string.dialog_test_data);
+
+        builder.setPositiveButton("생성", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SavingTestDataAsyncTask task = new SavingTestDataAsyncTask();
+                task.execute();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNeutralButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DeletingTestDataAsyncTask task = new DeletingTestDataAsyncTask();
+                task.execute();
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+
+    }
+
+
+    private class SavingTestDataAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            Calendar c = Calendar.getInstance();
+
+            for (int i = 0; i < 100; i++) {
+                BloodPressure pressure = ParseObject.create(BloodPressure.class);
+
+                Random random = new Random();
+
+                pressure.setBloodPressureMax(random.nextInt(50) + 100);
+                pressure.setBloodPressureMin(random.nextInt(30) + 70);
+                pressure.setBloodPulse(random.nextInt(40) + 50);
+
+                c.add(Calendar.HOUR_OF_DAY, 12);
+
+                pressure.setRegisteredDate(c.getTime());
+
+                MyLog.d(TAG, "BloodPressure >>>>>>> " + pressure.toString());
+
+                pressure.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null)
+                            MyLog.e(TAG, e);
+                        else
+                            MyLog.d(TAG, "Object is saved successfully.");
+                    }
+                });
+            }
+
+            return null;
+        }
+    }
+
+
+    private class DeletingTestDataAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
+            query.findInBackground(new FindCallback<BloodPressure>() {
+                @Override
+                public void done(List<BloodPressure> list, ParseException e) {
+
+                    if (e != null) {
+                        MyLog.e(TAG, e);
+                        return;
+                    }
+
+                    for (BloodPressure b : list) {
+                        b.deleteInBackground(new DeleteCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null)
+                                    MyLog.e(TAG, e);
+                                else
+                                    MyLog.d(TAG, "The Object delete successfully.");
+
+                            }
+                        });
+                    }
+
+                }
+            });
+
+            return null;
+        }
     }
 }

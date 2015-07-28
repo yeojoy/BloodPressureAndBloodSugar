@@ -16,19 +16,16 @@ import android.widget.Toast;
 
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.yeojoy.foryou.MainActivity;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.graph.GraphActivity;
-import me.yeojoy.foryou.input.InputActivity;
+import me.yeojoy.foryou.input.ModifyActivity;
 import me.yeojoy.foryou.model.BloodPressure;
-import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
 import me.yeojoy.library.log.MyLog;
 
@@ -44,7 +41,7 @@ public class BloodPressureAdapter
     private Context mContext;
     private List<BloodPressure> mBloodPressureList;
 
-    private int mPosition;
+    private int mPosition = -1;
 
     private ItemViewHolder viewHolder;
 
@@ -199,7 +196,9 @@ public class BloodPressureAdapter
                 public void onClick(DialogInterface dialog, int which) {
                     MyLog.i(TAG);
                     BloodPressure bp = mBloodPressureList.get(mPosition);
-                    Intent intent = new Intent(mContext, InputActivity.class);
+                    Intent intent = new Intent(mContext, ModifyActivity.class);
+                    intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_PRESSURE);
+
                     Bundle b = new Bundle();
                     b.putString(KEY_OBJECT_ID, bp.getObjectId());
                     b.putInt(KEY_PRESSURE_MAX, bp.getBloodPressureMax());

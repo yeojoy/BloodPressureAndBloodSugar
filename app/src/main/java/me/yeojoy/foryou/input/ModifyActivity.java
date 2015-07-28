@@ -13,9 +13,9 @@ import me.yeojoy.foryou.R;
 /**
  * Created by yeojoy on 15. 7. 3..
  */
-public class InputActivity extends BaseActivity {
+public class ModifyActivity extends BaseActivity {
 
-    private static final String TAG = InputActivity.class.getSimpleName();
+    private static final String TAG = ModifyActivity.class.getSimpleName();
 
     private int mCurrentInputType = 0;
 
@@ -43,22 +43,27 @@ public class InputActivity extends BaseActivity {
                 return;
             }
 
+            Bundle b = getIntent().getExtras();
+
+            if (!verifyBundleData(b))
+                finish();
+
             FragmentTransaction transaction = mFragmentManager.beginTransaction();
             switch (mCurrentInputType) {
                 case INPUT_TYPE_BLOOD_PRESSURE: {
                     InputBloodPressureFragment fragment = new InputBloodPressureFragment();
-                    fragment.setArguments(null);
+                    fragment.setArguments(b);
                     transaction.add(R.id.container, fragment).commit();
                     getSupportActionBar().setTitle(getResources()
-                            .getString(R.string.title_input_blood_pressure));
+                            .getString(R.string.title_modify_blood_pressure));
                     break;
                 }
                 case INPUT_TYPE_BLOOD_SUGAR: {
                     InputBloodSugarFragment fragment = new InputBloodSugarFragment();
-                    fragment.setArguments(null);
+                    fragment.setArguments(b);
                     transaction.add(R.id.container, fragment).commit();
                     getSupportActionBar().setTitle(getResources()
-                            .getString(R.string.title_input_blood_sugar));
+                            .getString(R.string.title_modify_blood_sugar));
                     break;
                 }
             }
@@ -73,5 +78,20 @@ public class InputActivity extends BaseActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean verifyBundleData(Bundle bundle) {
+        if (mCurrentInputType == INPUT_TYPE_BLOOD_PRESSURE) {
+            if (bundle.getInt(KEY_PRESSURE_MAX, 0) > 0
+                && bundle.getInt(KEY_PRESSURE_MIN, 0) > 0
+                && bundle.getInt(KEY_PRESSURE_PULSE, 0) > 0)
+                return true;
+        } else {
+            if (bundle.getInt(KEY_SUGAR, 0) > 0)
+                return true;
+        }
+
+
+        return false;
     }
 }

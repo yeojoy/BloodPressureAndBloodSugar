@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -59,6 +60,15 @@ public class GraphPressureFragment extends Fragment implements Consts, ParseCons
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mLcBlood = (LineChart) view.findViewById(R.id.lc_blood);
         mLcBlood.setBackgroundColor(Color.WHITE);
+        mLcBlood.setDrawGridBackground(false);
+        YAxis rightAxis = mLcBlood.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+
+        YAxis leftAxis = mLcBlood.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+
+        XAxis xAxis = mLcBlood.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
     }
 
     @Override

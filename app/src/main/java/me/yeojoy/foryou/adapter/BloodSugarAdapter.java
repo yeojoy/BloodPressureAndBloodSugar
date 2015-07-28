@@ -174,6 +174,7 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
                     MyLog.d(TAG, "Postion >>> " + mPosition);
                     BloodSugar bp = mBloodSugarList.get(mPosition);
                     Intent intent = new Intent(mContext, InputActivity.class);
+                    intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_SUGAR);
                     Bundle b = new Bundle();
                     b.putString(KEY_OBJECT_ID, bp.getObjectId());
                     b.putInt(KEY_SUGAR, bp.getBloodSugar());
