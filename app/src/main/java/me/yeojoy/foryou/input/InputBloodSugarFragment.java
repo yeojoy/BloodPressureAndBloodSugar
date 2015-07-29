@@ -147,7 +147,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
         MyLog.d(TAG, b.toString());
 
         mEtBloodSugar.setText(String.valueOf(b.getInt(KEY_SUGAR)));
-        mEtWeight.setText(String.valueOf(b.getFloat(KEY_SUGAR_WEIGHT)));
+        mEtWeight.setText(String.format("%.1f", b.getFloat(KEY_SUGAR_WEIGHT)));
 
         int itemId;
         switch (b.getInt(KEY_SUGAR_MEASURED_TIME)) {

@@ -8,6 +8,7 @@
     <!-- 혈당 title -->
     <TextView
         style="@style/InputTitle"
+        android:id="@+id/tv_fragment_title"
         android:layout_marginTop="25dp"
         android:text="@string/title_blood_sugar" />
 

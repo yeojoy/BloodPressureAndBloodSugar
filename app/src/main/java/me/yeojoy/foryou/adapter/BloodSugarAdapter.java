@@ -93,7 +93,7 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
         holder.tvMeasureTime.setText(measureTime);
 
         if (bs.getWeight() > 0f)
-            holder.tvWeight.setText(String.valueOf(bs.getWeight()));
+            holder.tvWeight.setText(String.format("%.1f", bs.getWeight()));
         else
             holder.tvWeight.setText("-");
 
