@@ -10,15 +10,21 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.parse.ParseUser;
 
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.input.InputActivity;
 import me.yeojoy.foryou.view.SlidingTabLayout;
+import me.yeojoy.library.log.MyLog;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -45,7 +51,27 @@ public class MainFragment extends Fragment implements Consts {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        hasOptionsMenu();
         return inflater.inflate(R.layout.fragment_main, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_info) {
+
+            return true;
+        } else if (id == R.id.action_backup) {
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -85,6 +111,11 @@ public class MainFragment extends Fragment implements Consts {
                 mFamInputMenu.findViewById(R.id.fab_input_blood_sugar);
         fabInputBloodPressure.setOnClickListener(mBtnClickListener);
         fabInputBloodSugar.setOnClickListener(mBtnClickListener);
+
+        MyLog.d(TAG, "+++++++++++++++++++++++++++++++++++++++++++++++++++");
+        MyLog.d(TAG, "USER Object ID : " + ParseUser.getCurrentUser()
+                .getObjectId());
+        MyLog.d(TAG, "+++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {

@@ -45,6 +45,6 @@ public class ForYouApplication extends Application implements ApiKey {
         // defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
 
-        URQAController.InitializeAndStartSession(this, URQA_API_KEY);
+//        URQAController.InitializeAndStartSession(this, URQA_API_KEY);
     }
 }

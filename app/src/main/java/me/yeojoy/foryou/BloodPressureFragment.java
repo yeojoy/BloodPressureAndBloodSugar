@@ -18,6 +18,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -41,8 +42,6 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
     private RecyclerView mRvBloodPressure;
 
     private TextView mTvEmptyData;
-
-    private List<BloodPressure> mBloodPressureDataList;
 
     private BloodPressureAdapter mAdapter;
 
@@ -80,8 +79,6 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
     public void onResume() {
         super.onResume();
 
-//        showBloodPressureData();
-
         SelectAsyncTask task = new SelectAsyncTask();
         task.execute();
     }
@@ -98,22 +95,6 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
         header.addView(layout, params);
     }
 
-    private void showBloodPressureData() {
-        ParseQuery<BloodPressure> query = ParseQuery.getQuery(BloodPressure.class);
-        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
-        query.findInBackground(new FindCallback<BloodPressure>() {
-            @Override
-            public void done(List<BloodPressure> list, ParseException e) {
-                if (list == null || list.size() < 1) {
-                    MyLog.d(TAG, e);
-                    return;
-                }
-
-                displayData(list);
-            }
-        });
-    }
-
     private void displayData(final List<BloodPressure> list) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -125,7 +106,6 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
                     return;
                 }
 
-                mBloodPressureDataList = list;
                 mAdapter.setBloodPressureList(list);
 
                 mTvEmptyData.setVisibility(View.GONE);
@@ -163,7 +143,6 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
                 return;
             }
 
-            mBloodPressureDataList = data;
             mAdapter.setBloodPressureList(data);
 
             mTvEmptyData.setVisibility(View.GONE);

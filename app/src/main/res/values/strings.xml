@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">혈압·혈당 관리</string>
     <string name="hello_world">Hello world!</string>
+    <string name="action_info">App 정보</string>
+    <string name="action_backup">Data 백업</string>
     <string name="action_input_blood_pressure">혈압 입력</string>
     <string name="action_input_blood_sugar">혈당 입력</string>
 

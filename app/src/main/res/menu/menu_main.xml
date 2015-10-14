@@ -2,14 +2,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
-    <item android:id="@+id/action_input_blood_pressure"
-          android:title="@string/action_input_blood_pressure"
+    <item android:id="@+id/action_info"
+          android:title="@string/action_info"
           android:orderInCategory="100"
-          android:icon="@android:drawable/ic_input_add"
+          android:icon="@android:drawable/ic_dialog_info"
           app:showAsAction="never"/>
-    <item android:id="@+id/action_input_blood_sugar"
-          android:title="@string/action_input_blood_sugar"
+    <item android:id="@+id/action_backup"
+          android:title="@string/action_backup"
           android:orderInCategory="100"
-          android:icon="@android:drawable/ic_input_add"
+          android:icon="@android:drawable/ic_menu_save"
           app:showAsAction="never"/>
 </menu>

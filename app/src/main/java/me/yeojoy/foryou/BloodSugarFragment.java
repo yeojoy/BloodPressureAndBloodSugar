@@ -40,8 +40,6 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
 
     private TextView mTvEmptyData;
 
-    private List<BloodSugar> mBloodSugarDataList;
-
     private BloodSugarAdapter mAdapter;
 
     @Override
@@ -120,7 +118,6 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
                 return;
             }
 
-            mBloodSugarDataList = data;
             mAdapter.setBloodSugarList(data);
 
             mTvEmptyData.setVisibility(View.GONE);

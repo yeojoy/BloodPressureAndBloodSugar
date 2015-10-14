@@ -41,8 +41,6 @@ public class BloodPressureAdapter
     private Context mContext;
     private List<BloodPressure> mBloodPressureList;
 
-    private int mPosition = -1;
-
     private ItemViewHolder viewHolder;
 
     public BloodPressureAdapter(Context context, List<BloodPressure> list) {
@@ -66,8 +64,6 @@ public class BloodPressureAdapter
         BloodPressure bp = mBloodPressureList.get(position);
 
         if (bp == null) return;
-
-        mPosition = position;
 
         int[] colors = CommonUtils.getTextColorOfBloodPressure(mContext,
                 bp.getBloodPressureMax(), bp.getBloodPressureMin());
@@ -95,12 +91,10 @@ public class BloodPressureAdapter
         holder.tvPulse.setText(String.valueOf(bp.getBloodPulse()));
 
 
-        holder.tvMax.setOnClickListener(new PressureClickListener(position));
-        holder.tvMin.setOnClickListener(new PressureClickListener(position));
-        holder.tvPulse.setOnClickListener(new PressureClickListener(position));
-
-        holder.tvDate.setOnLongClickListener(new PressureLongClickListener(position));
-        holder.tvTime.setOnLongClickListener(new PressureLongClickListener(position));
+        holder.rootView.setOnClickListener(new PressureClickListener
+                (position));
+        holder.rootView.setOnLongClickListener(new PressureLongClickListener
+                (position));
 
     }
 
@@ -111,12 +105,14 @@ public class BloodPressureAdapter
 
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        public final TextView tvDate, tvTime, tvMax, tvMin, tvPulse;
+        public View rootView;
+        public TextView tvDate, tvTime, tvMax, tvMin, tvPulse;
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+
+            rootView = itemView;
             tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvMax = (TextView) itemView.findViewById(R.id.tv_blood_pressure_max);
@@ -166,17 +162,17 @@ public class BloodPressureAdapter
             sb.append("\n");
             sb.append(new SimpleDateFormat(DATE_TIME_FORMAT).format(bp.getRegisteredDate()));
             sb.append("에 측정한").append("\n");
-            sb.append("Max : ").append(bp.getBloodPressureMax());
-            sb.append(", Min : ").append(bp.getBloodPressureMin());
-            sb.append(", Pulse : ").append(bp.getBloodPulse());
-            sb.append("\n\n").append("데이터를 삭제 하시겠습니까?");
+            sb.append("최대 : ").append(bp.getBloodPressureMax());
+            sb.append(", 최소 : ").append(bp.getBloodPressureMin());
+            sb.append(", 심박 : ").append(bp.getBloodPulse());
+            sb.append("\n\n").append("데이터를 수정 혹은 삭제 하시겠습니까?");
             builder.setMessage(sb);
 
             builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     MyLog.i(TAG);
-                    MyLog.d(TAG, "Postion >>> " + mPosition);
+                    MyLog.d(TAG, "Position >>> " + mPosition);
 
                     BloodPressure bp = mBloodPressureList.get(mPosition);
                     bp.deleteInBackground(new DeleteCallback() {

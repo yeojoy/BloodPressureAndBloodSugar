@@ -97,12 +97,9 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
         else
             holder.tvWeight.setText("-");
 
-        holder.tvSugar.setOnClickListener(new PressureClickListener(position));
-        holder.tvMeasureTime.setOnClickListener(new PressureClickListener(position));
-        holder.tvWeight.setOnClickListener(new PressureClickListener(position));
-
-        holder.tvDate.setOnLongClickListener(new PressureLongClickListener(position));
-        holder.tvTime.setOnLongClickListener(new PressureLongClickListener(position));
+        holder.rootView.setOnClickListener(new PressureClickListener(position));
+        holder.rootView.setOnLongClickListener(new PressureLongClickListener
+                (position));
     }
 
     private class PressureClickListener implements View.OnClickListener {
@@ -135,7 +132,6 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
         @Override
         public boolean onLongClick(View v) {
             MyLog.i(TAG);
-            MyLog.d(TAG, "Postion >>>>> " + mPosition);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
@@ -145,15 +141,15 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
             sb.append("\n");
             sb.append(new SimpleDateFormat(DATE_TIME_FORMAT).format(bs.getRegisteredDate()));
             sb.append("에 측정한").append("\n");
-            sb.append("Sugar : ").append(bs.getBloodSugar());
-            sb.append(", Weight : ").append(bs.getWeight());
-            sb.append("\n\n").append("데이터를 삭제 하시겠습니까?");
+            sb.append("혈당 : ").append(bs.getBloodSugar());
+            sb.append(", 몸무게 : ").append(bs.getWeight());
+            sb.append("\n\n").append("데이터를 수정 혹은 삭제 하시겠습니까?");
             builder.setMessage(sb);
             builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     MyLog.i(TAG);
-                    MyLog.d(TAG, "Postion >>> " + mPosition);
+                    MyLog.d(TAG, "Position >>> " + mPosition);
 
                     BloodSugar bp = mBloodSugarList.get(mPosition);
                     bp.deleteInBackground(new DeleteCallback() {
@@ -208,10 +204,11 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        public final TextView tvDate, tvTime, tvSugar, tvMeasureTime, tvWeight;
-
+        public TextView tvDate, tvTime, tvSugar, tvMeasureTime, tvWeight;
+        public View rootView;
         public ItemViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
             tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvSugar = (TextView) itemView.findViewById(R.id.tv_blood_sugar);
