@@ -84,12 +84,8 @@ public class BloodPressureFragment extends Fragment implements ParseConsts {
     }
 
     public void setHeader(LinearLayout header) {
-        LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.row_blood_pressure, null);
-        ((TextView) layout.findViewById(R.id.tv_date)).setText(R.string.label_blood_date);
-        ((TextView) layout.findViewById(R.id.tv_time)).setText(R.string.label_blood_time);
-        ((TextView) layout.findViewById(R.id.tv_blood_pressure_max)).setText(R.string.label_blood_pressure_max);
-        ((TextView) layout.findViewById(R.id.tv_blood_pressure_min)).setText(R.string.label_blood_pressure_min);
-        ((TextView) layout.findViewById(R.id.tv_blood_pulse)).setText(R.string.label_blood_pulse);
+        LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext)
+                .inflate(R.layout.row_blood_pressure_title, null);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         header.addView(layout, params);

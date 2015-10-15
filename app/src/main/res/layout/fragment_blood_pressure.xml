@@ -9,13 +9,13 @@
         android:id="@+id/ll_header"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_title_height" />
+        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_blood_pressure"
         android:layout_below="@id/ll_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/tv_empty_data"

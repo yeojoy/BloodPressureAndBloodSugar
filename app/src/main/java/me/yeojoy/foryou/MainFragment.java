@@ -21,7 +21,9 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.parse.ParseUser;
 
+import me.yeojoy.foryou.backup.BackupActivity;
 import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.foryou.info.InfoActivity;
 import me.yeojoy.foryou.input.InputActivity;
 import me.yeojoy.foryou.view.SlidingTabLayout;
 import me.yeojoy.library.log.MyLog;
@@ -51,7 +53,7 @@ public class MainFragment extends Fragment implements Consts {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        hasOptionsMenu();
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
@@ -64,13 +66,18 @@ public class MainFragment extends Fragment implements Consts {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Intent intent = null;
         if (id == R.id.action_info) {
-
-            return true;
+            intent = new Intent(mContext, InfoActivity.class);
         } else if (id == R.id.action_backup) {
+            intent = new Intent(mContext, BackupActivity.class);
+        }
 
+        if (intent != null) {
+            startActivity(intent);
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

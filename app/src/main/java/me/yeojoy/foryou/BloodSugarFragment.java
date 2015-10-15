@@ -80,12 +80,8 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
     }
 
     public void setHeader(LinearLayout header) {
-        LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.row_blood_sugar, null);
-        ((TextView) layout.findViewById(R.id.tv_date)).setText(R.string.label_blood_date);
-        ((TextView) layout.findViewById(R.id.tv_time)).setText(R.string.label_blood_time);
-        ((TextView) layout.findViewById(R.id.tv_blood_sugar)).setText(R.string.label_blood_sugar);
-        ((TextView) layout.findViewById(R.id.tv_measure_time)).setText(R.string.label_measure_time);
-        ((TextView) layout.findViewById(R.id.tv_weight)).setText(R.string.label_weight);
+        LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext)
+                .inflate(R.layout.row_blood_sugar_title, null);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         header.addView(layout, params);
