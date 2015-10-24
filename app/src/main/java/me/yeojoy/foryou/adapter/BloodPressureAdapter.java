@@ -152,7 +152,6 @@ public class BloodPressureAdapter
         @Override
         public boolean onLongClick(View v) {
             MyLog.i(TAG);
-            MyLog.d(TAG, "Postion >>>>> " + mPosition);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 

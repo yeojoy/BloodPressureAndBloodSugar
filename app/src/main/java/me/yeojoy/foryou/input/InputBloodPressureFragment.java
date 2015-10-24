@@ -189,6 +189,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
                     pressure.save();
                 } catch (java.text.ParseException e) {
                     MyLog.e(TAG, e);
+                    return false;
                 } catch (ParseException e) {
                     MyLog.e(TAG, e);
                     return false;
@@ -211,8 +212,10 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
                     }
                 } catch (ParseException e) {
                     MyLog.e(TAG, e);
+                    return false;
                 } catch (java.text.ParseException e) {
                     MyLog.e(TAG, e);
+                    return false;
                 }
 
                 mObjectId = null;
@@ -241,7 +244,7 @@ public class InputBloodPressureFragment extends Fragment implements Consts {
 
                 CommonUtils.hideKeyboard(mContext, mEtBloodPulse);
 
-                ((InputActivity) mContext).finish();
+                ((Activity) mContext).finish();
             } else {
                 Toast.makeText(mContext,
                         R.string.toast_warning_fail_save_blood_pressure,

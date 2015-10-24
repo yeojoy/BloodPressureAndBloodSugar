@@ -20,5 +20,4 @@ public interface ParseConsts {
 
     /** 공통 key */
     String PARSE_COMMON_COLUMN_REGISTERED_AT = "registeredAt";
-
 }

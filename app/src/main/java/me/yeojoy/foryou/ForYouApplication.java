@@ -7,7 +7,6 @@ import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.urqa.clientinterface.URQAController;
 
 import me.yeojoy.foryou.config.ApiKey;
 import me.yeojoy.foryou.model.BloodPressure;
@@ -44,7 +43,5 @@ public class ForYouApplication extends Application implements ApiKey {
         // Optionally enable public read access.
         // defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
-
-//        URQAController.InitializeAndStartSession(this, URQA_API_KEY);
     }
 }

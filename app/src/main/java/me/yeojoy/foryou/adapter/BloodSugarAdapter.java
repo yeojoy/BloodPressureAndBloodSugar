@@ -25,6 +25,7 @@ import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
 import me.yeojoy.foryou.graph.GraphActivity;
 import me.yeojoy.foryou.input.InputActivity;
+import me.yeojoy.foryou.input.ModifyActivity;
 import me.yeojoy.foryou.model.BloodPressure;
 import me.yeojoy.foryou.model.BloodSugar;
 import me.yeojoy.foryou.utils.CommonUtils;
@@ -169,7 +170,7 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
                     MyLog.i(TAG);
                     MyLog.d(TAG, "Postion >>> " + mPosition);
                     BloodSugar bp = mBloodSugarList.get(mPosition);
-                    Intent intent = new Intent(mContext, InputActivity.class);
+                    Intent intent = new Intent(mContext, ModifyActivity.class);
                     intent.putExtra(KEY_INPUT_TYPE, INPUT_TYPE_BLOOD_SUGAR);
                     Bundle b = new Bundle();
                     b.putString(KEY_OBJECT_ID, bp.getObjectId());
