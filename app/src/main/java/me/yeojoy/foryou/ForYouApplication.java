@@ -21,10 +21,16 @@ public class ForYouApplication extends Application implements ApiKey {
 
     private static final String TAG = ForYouApplication.class.getSimpleName();
 
+    public static boolean mIsPregnant;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        initParseSetting();
+    }
+
+    private void initParseSetting() {
         // Initialize Crash Reporting.
         ParseCrashReporting.enable(this);
         // Enable Local Datastore.

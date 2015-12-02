@@ -74,4 +74,11 @@
         선택하시기 바랍니다.
         \n감사합니다.
     </string>
+
+    <string name="pref_setting_default_category_title">기본설정</string>
+    <string name="pref_key_setting_default_category">key_default_category</string>
+    <string name="pref_title_is_pregnant">임신중</string>
+    <string name="pref_summary_is_pregnant">여성분이신 경우 임신 중이실 때 체크해 주세요</string>
+    <string name="pref_key_is_pregnant">key_is_pregnant</string>
+
 </resources>
