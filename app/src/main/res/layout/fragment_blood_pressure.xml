@@ -11,11 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_blood_pressure"
-        android:layout_below="@id/ll_header"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/spl_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_blood_pressure"
+            android:layout_below="@id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/tv_empty_data"
