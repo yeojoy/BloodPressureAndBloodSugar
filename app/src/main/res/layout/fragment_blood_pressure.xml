@@ -12,7 +12,7 @@
         android:layout_height="wrap_content" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/spl_refresh"
+        android:id="@+id/srl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
