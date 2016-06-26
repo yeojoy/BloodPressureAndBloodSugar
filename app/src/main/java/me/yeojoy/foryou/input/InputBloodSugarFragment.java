@@ -147,7 +147,11 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
         MyLog.d(TAG, b.toString());
 
         mEtBloodSugar.setText(String.valueOf(b.getInt(KEY_SUGAR)));
-        mEtWeight.setText(String.format("%.1f", b.getFloat(KEY_SUGAR_WEIGHT)));
+        if (b.getFloat(KEY_SUGAR_WEIGHT) < 20f) {
+            mEtWeight.setText("");
+        } else {
+            mEtWeight.setText(String.format("%.1f", b.getFloat(KEY_SUGAR_WEIGHT)));
+        }
 
         int itemId;
         switch (b.getInt(KEY_SUGAR_MEASURED_TIME)) {
@@ -208,23 +212,21 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
 
             if (mObjectId == null || mObjectId.isEmpty()) {
 
-                BloodSugar sugar = ParseObject.create(BloodSugar.class);
-                sugar.setBloodSugar(mBloodSugar);
-                sugar.setMeasureTime(mMeasureTime);
-                sugar.setWeight(mWeight);
-
                 try {
+                    BloodSugar sugar = ParseObject.create(BloodSugar.class);
+                    sugar.setBloodSugar(mBloodSugar);
+                    sugar.setMeasureTime(mMeasureTime);
+                    sugar.setWeight(mWeight);
                     sugar.setRegisteredDate(new SimpleDateFormat(DATE_TIME_FORMAT).parse(mDateTime));
+                    sugar.save();
                 } catch (java.text.ParseException e) {
                     MyLog.e(TAG, e);
-                }
-
-                try {
-                    sugar.save();
+                    return false;
                 } catch (ParseException e) {
                     MyLog.e(TAG, e);
                     return false;
                 }
+
             } else {
                 MyLog.d(TAG, "Object ID >>>> " + mObjectId);
                 ParseQuery<BloodSugar> query = ParseQuery.getQuery(BloodSugar.class);
@@ -272,7 +274,7 @@ public class InputBloodSugarFragment extends Fragment implements Consts, ParseCo
 
                 CommonUtils.hideKeyboard(mContext, mEtBloodSugar);
 
-                ((InputActivity) mContext).finish();
+                ((Activity) mContext).finish();
             } else {
                 Toast.makeText(mContext,
                         R.string.toast_warning_fail_save_blood_pressure,

@@ -44,11 +44,11 @@ public class BackupActivity extends BaseActivity {
                 it.setType("plain/text");
 
                 // 수신인 주소 - tos배열의 값을 늘릴 경우 다수의 수신자에게 발송됨
-                String[] tos = {"test@gmail.com"};
+                String[] tos = {"kim.yeojoy@gmail.com"};
                 it.putExtra(Intent.EXTRA_EMAIL, tos);
 
                 it.putExtra(Intent.EXTRA_SUBJECT, "[혈압.혈당앱] 자료 백업 email.");
-                it.putExtra(Intent.EXTRA_TEXT, "고객님께서 저장하신 혈압.혈당 기록을 보내드립니다" +
+                it.putExtra(Intent.EXTRA_TEXT, "\n고객님께서 저장하신 혈압.혈당 기록을 보내드립니다" +
                         ".\n");
 
                 // 파일첨부

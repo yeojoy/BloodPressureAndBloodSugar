@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -42,6 +43,8 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
 
     private BloodSugarAdapter mAdapter;
 
+    private SwipeRefreshLayout mSrlRefresh;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -60,6 +63,14 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
 
         LinearLayout llHeader = (LinearLayout) view.findViewById(R.id.ll_header);
 
+        mSrlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_refresh);
+        mSrlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getBloodSugarData();
+            }
+        });
+
         mRvBloodPressure = (RecyclerView) view.findViewById(R.id.rv_blood_pressure);
         mRvBloodPressure.addItemDecoration(new DividerItemDecoration(mContext,
                 DividerItemDecoration.VERTICAL_LIST));
@@ -75,8 +86,8 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
     @Override
     public void onResume() {
         super.onResume();
-        SelectAsyncTask task = new SelectAsyncTask();
-        task.execute();
+
+        getBloodSugarData();
     }
 
     public void setHeader(LinearLayout header) {
@@ -85,6 +96,12 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         header.addView(layout, params);
+    }
+
+    private void getBloodSugarData() {
+        MyLog.i(TAG);
+        SelectAsyncTask task = new SelectAsyncTask();
+        task.execute();
     }
 
     private class SelectAsyncTask extends AsyncTask<Void, Void, List<BloodSugar>> {
@@ -106,6 +123,8 @@ public class BloodSugarFragment extends Fragment implements ParseConsts {
         @Override
         protected void onPostExecute(List<BloodSugar> data) {
             super.onPostExecute(data);
+
+            mSrlRefresh.setRefreshing(false);
 
             if (data == null || data.size() < 1) {
                 MyLog.e(TAG, "no data.");
