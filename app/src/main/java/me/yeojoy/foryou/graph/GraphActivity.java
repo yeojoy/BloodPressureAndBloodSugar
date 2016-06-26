@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import me.yeojoy.foryou.BaseActivity;
 import me.yeojoy.foryou.R;
 import me.yeojoy.foryou.config.Consts;
+import me.yeojoy.library.log.MyLog;
 
 public class GraphActivity extends BaseActivity implements Consts {
 
@@ -29,8 +30,9 @@ public class GraphActivity extends BaseActivity implements Consts {
         Intent i = getIntent();
         if (i != null) {
             FragmentManager manager = getFragmentManager();
-
-            switch (i.getIntExtra(KEY_GRAPH_TYPE, 0)) {
+            int graphType = i.getIntExtra(KEY_GRAPH_TYPE, 0);
+            MyLog.d(TAG, "Graph Type : " + graphType);
+            switch (graphType) {
                 case GRAPH_TYPE_BLOOD_PRESSURE:
                     Fragment pressureFragment = new GraphPressureFragment();
                     pressureFragment.setArguments(i.getExtras());

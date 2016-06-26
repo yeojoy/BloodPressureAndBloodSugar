@@ -1,26 +1,15 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.parse'
-
-buildscript {
-    repositories {
-        jcenter()
-        maven { url 'https://maven.parse.com/repo' }
-    }
-    dependencies {
-        classpath 'com.parse.tools:gradle:1.+'
-    }
-}
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "me.yeojoy.foryou"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode rootProject.ext.VERSION_CODE
-        versionName rootProject.ext.VERSION_NAME
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
         project.archivesBaseName = 'sunny'
         applicationVariants.all { variant ->
             // In Android Studio VER 1.0, Must add below lines.
@@ -33,7 +22,7 @@ android {
         }
     }
 
-    signingConfigs{
+    signingConfigs {
         release {
             // ~/.gradle/gradle.properties 에서 불러옴
 //            storeFile file(RELEASE_STORE_FILE)
@@ -54,9 +43,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.github.clans:fab:1.5.3'
     compile 'com.github.yeojoy:yeojoy-library:0.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile 'com.parse:parse-android:1.+'
 }

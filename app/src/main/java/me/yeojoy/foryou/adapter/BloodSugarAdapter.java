@@ -157,7 +157,7 @@ public class BloodSugarAdapter extends RecyclerView.Adapter<BloodSugarAdapter.It
                         public void done(ParseException e) {
                             Toast.makeText(mContext, "삭제 했습니다.", Toast.LENGTH_SHORT).show();
                             mBloodSugarList.remove(mPosition);
-                            notifyDataSetChanged();
+                            notifyItemRemoved(mPosition);
                         }
                     });
                 }

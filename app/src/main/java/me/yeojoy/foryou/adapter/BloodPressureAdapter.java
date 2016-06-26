@@ -41,10 +41,9 @@ public class BloodPressureAdapter
     private Context mContext;
     private List<BloodPressure> mBloodPressureList;
 
-    private ItemViewHolder viewHolder;
-
     public BloodPressureAdapter(Context context, List<BloodPressure> list) {
         mContext = context;
+
         if (list != null)
             mBloodPressureList = list;
         else
@@ -55,8 +54,7 @@ public class BloodPressureAdapter
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.row_blood_pressure, parent, false);
-        viewHolder = new ItemViewHolder(view);
-        return viewHolder;
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -87,15 +85,12 @@ public class BloodPressureAdapter
                 SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
         holder.tvMin.setText(spannableString);
 
-
         holder.tvPulse.setText(String.valueOf(bp.getBloodPulse()));
-
 
         holder.rootView.setOnClickListener(new PressureClickListener
                 (position));
         holder.rootView.setOnLongClickListener(new PressureLongClickListener
                 (position));
-
     }
 
     @Override
@@ -133,7 +128,7 @@ public class BloodPressureAdapter
         @Override
         public void onClick(View v) {
             MyLog.i(TAG);
-            MyLog.d(TAG, "Postion >>>>> " + mPosition);
+            MyLog.d(TAG, "Position >>>>> " + mPosition);
             Intent intent = new Intent(mContext, GraphActivity.class);
             intent.putExtra(KEY_GRAPH_ITEM_POSITON, mPosition);
             intent.putExtra(KEY_GRAPH_TYPE, GRAPH_TYPE_BLOOD_PRESSURE);
@@ -181,7 +176,7 @@ public class BloodPressureAdapter
                             Toast.makeText(mContext, "삭제 했습니다.", Toast.LENGTH_SHORT).show();
                             mBloodPressureList.remove(mPosition);
 
-                            notifyDataSetChanged();
+                            notifyItemRemoved(mPosition);
                         }
                     });
                 }

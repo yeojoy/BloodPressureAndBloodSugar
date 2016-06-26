@@ -21,11 +21,11 @@ public interface Consts {
 
     String KEY_DATE_TIME            = "date_time";
 
-    int INPUT_TYPE_BLOOD_PRESSURE   = 0x000001;
-    int INPUT_TYPE_BLOOD_SUGAR      = 0x000002;
+    int INPUT_TYPE_BLOOD_PRESSURE   = 0x01;
+    int INPUT_TYPE_BLOOD_SUGAR      = 0x02;
 
-    int GRAPH_TYPE_BLOOD_PRESSURE   = 0x000003;
-    int GRAPH_TYPE_BLOOD_SUGAR      = 0x000004;
+    int GRAPH_TYPE_BLOOD_PRESSURE   = 0x03;
+    int GRAPH_TYPE_BLOOD_SUGAR      = 0x04;
 
     /** date format */
     String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
