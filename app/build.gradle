@@ -1,15 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
 
     defaultConfig {
         applicationId "me.yeojoy.foryou"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode VERSION_CODE
         versionName VERSION_NAME
+
+        multiDexEnabled true
+
         project.archivesBaseName = 'sunny'
         applicationVariants.all { variant ->
             // In Android Studio VER 1.0, Must add below lines.
@@ -43,12 +46,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
     compile 'com.github.clans:fab:1.5.3'
     compile 'com.github.yeojoy:yeojoy-library:0.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
 
-    compile 'com.parse.bolts:bolts-android:1.+'
-    compile 'com.parse:parse-android:1.+'
+    compile 'com.parse.bolts:bolts-tasks:1.4.0'
+    compile 'com.parse:parse-android:1.13.0'
+
+    compile 'com.android.support:multidex:1.0.1'
 }

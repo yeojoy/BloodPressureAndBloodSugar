@@ -2,6 +2,7 @@ package me.yeojoy.foryou.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,55 +39,53 @@ public class CommonUtils implements Consts {
     public static int[] getTextColorOfBloodPressure(Context context, float max, float min) {
 
         int[] colors = new int[2];
-        Resources res = context.getResources();
         if (max > 120f || max <= 90f) {
-            colors[0] = res.getColor(R.color.text_color_danger);
+            colors[0] = ContextCompat.getColor(context, R.color.text_color_danger);
         } else {
-            colors[0] = res.getColor(R.color.primary_text);
+            colors[0] = ContextCompat.getColor(context, R.color.primary_text);
         }
 
         if (min > 80f || min <= 60f) {
-            colors[1] = res.getColor(R.color.text_color_danger);
+            colors[1] = ContextCompat.getColor(context, R.color.text_color_danger);
         } else {
-            colors[1] = res.getColor(R.color.primary_text);
+            colors[1] = ContextCompat.getColor(context, R.color.primary_text);
         }
 
         return colors;
     }
 
     public static int getTextColorOfBloodSugar(Context context, int bloodSugar, int time) {
-        Resources res = context.getResources();
         int color;
 
         switch (time) {
             case 0:
                 // 식사 직후
                 if (bloodSugar < 200)
-                    color = res.getColor(R.color.primary_text);
+                    color = ContextCompat.getColor(context, R.color.primary_text);
                 else
-                    color = res.getColor(R.color.text_color_danger);
+                    color = ContextCompat.getColor(context, R.color.text_color_danger);
                 break;
             case 2:
                 // 식 후 2시간 경과
                 if (bloodSugar < 140)
-                    color = res.getColor(R.color.primary_text);
+                    color = ContextCompat.getColor(context, R.color.primary_text);
                 else
-                    color = res.getColor(R.color.text_color_danger);
+                    color = ContextCompat.getColor(context, R.color.text_color_danger);
                 break;
 
             case 3:
                 // 아침 공복
                 if (bloodSugar < 100)
-                    color = res.getColor(R.color.primary_text);
+                    color = ContextCompat.getColor(context, R.color.primary_text);
                 else
-                    color = res.getColor(R.color.text_color_danger);
+                    color = ContextCompat.getColor(context, R.color.text_color_danger);
                 break;
 
             default:
                 if (bloodSugar < 160)
-                    color = res.getColor(R.color.primary_text);
+                    color = ContextCompat.getColor(context, R.color.primary_text);
                 else
-                    color = res.getColor(R.color.text_color_danger);
+                    color = ContextCompat.getColor(context, R.color.text_color_danger);
                 break;
 
         }

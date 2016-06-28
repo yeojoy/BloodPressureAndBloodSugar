@@ -1,10 +1,10 @@
 package me.yeojoy.foryou;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
-import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -26,13 +26,11 @@ public class ForYouApplication extends Application implements ApiKey {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        MultiDex.install(this);
         initParseSetting();
     }
 
     private void initParseSetting() {
-        // Initialize Crash Reporting.
-        ParseCrashReporting.enable(this);
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 
